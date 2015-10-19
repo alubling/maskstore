@@ -14,7 +14,7 @@ var schema = new mongoose.Schema({
             ref: 'Mask'
         },
         price: {
-            type: Number
+            type: Currency
         },
         quantity: {
             type: Number
