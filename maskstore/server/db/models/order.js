@@ -1,7 +1,6 @@
 'use strict';
 
-var mongoose = require('mongoose'),
-    Schema = mongoose.Schema;
+var mongoose = require('mongoose');
 
 // adds the schema type "currency" to mongoose
 require('mongoose-currency').loadType(mongoose);
