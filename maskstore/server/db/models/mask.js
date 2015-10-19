@@ -38,3 +38,5 @@ var MaskSchema = new mongoose.Schema({
 
 
 mongoose.model('Mask', MaskSchema);
+
+module.exports = mongoose.model('Mask', MaskSchema);
