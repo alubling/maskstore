@@ -8,16 +8,23 @@ var Currency = mongoose.Types.Currency;
 
 var MaskSchema = new mongoose.Schema({
     title: {
-      type: String,
-      unique: true
+        type: String,
+        unique: true,
+        required: true
     },
     description: {
-      type: String
+        type: String,
+        required: true,
+        minlength: 1
     },
-    inventory: Number,
+    inventory: {
+        type: Number,
+        min: 0,
+        default: 0
+    },
     image: {
-      type: String,
-      default: 'http://www.wholesaleforeveryone.com/Merchant2/graphics/00000001/hats/atht9030C0137.jpg'
+        type: String,
+        default: 'http://www.wholesaleforeveryone.com/Merchant2/graphics/00000001/hats/atht9030C0137.jpg'
     },
     style: {
         type: String,
@@ -25,17 +32,20 @@ var MaskSchema = new mongoose.Schema({
         required: true
     },
     color: {
-        type: String
-    },
-    purpose: {
         type: String,
-        enum: ['costume', 'burglary', 'armed robbery', 'meth making', 'handling liquid nitrogen', 'skiing']
+        required: true
+    },
+    category: {
+        type: String,
+        enum: ['costume', 'burglary', 'armed robbery', 'meth making', 'handling liquid nitrogen', 'skiing'],
+        required: true
     },
     price: {
-        type: Currency
-    },
+        type: Currency,
+        default: 0,
+        min: 0
+    }
 });
-
 
 mongoose.model('Mask', MaskSchema);
 

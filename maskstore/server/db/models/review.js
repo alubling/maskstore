@@ -4,7 +4,10 @@ var mongoose = require('mongoose');
 
 var schema = new mongoose.Schema({
     stars: {
-        type: Number
+        type: Number,
+        min: 0,
+        max: 5,
+        default: 0
     },
     text: {
         type: String,
@@ -16,9 +19,9 @@ var schema = new mongoose.Schema({
         required: true
     },
     mask: {
-      type: String,
-      ref: 'Mask',
-      required: true
+        type: String,
+        ref: 'Mask',
+        required: true
     }
 });
 
