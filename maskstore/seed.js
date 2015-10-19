@@ -74,7 +74,7 @@ var seedMasks = function () {
             image: 'http://www.wholesaleforeveryone.com/Merchant2/graphics/00000001/hats/atht9030C0100.jpg',
             style: 'full',
             color: 'neon yellow',
-            purpose: 'handling liquid nitrogen',
+            category: 'handling liquid nitrogen',
             price: '$19.95'
         },
         {
@@ -84,7 +84,7 @@ var seedMasks = function () {
             image: 'http://ecx.images-amazon.com/images/I/81b2kjDDHnL._SL1500_.jpg',
             style: 'eccentric',
             color: 'green',
-            purpose: 'costume',
+            category: 'costume',
             price: '$19.95'
         }
     ];

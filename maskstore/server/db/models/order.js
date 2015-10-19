@@ -1,7 +1,7 @@
 'use strict';
 
-var mongoose = require('mongoose')
-  , Schema = mongoose.Schema;
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
 // adds the schema type "currency" to mongoose
 require('mongoose-currency').loadType(mongoose);
@@ -9,7 +9,18 @@ var Currency = mongoose.Types.Currency;
 
 var schema = new mongoose.Schema({
 
-    masks: [{ type: Schema.Types.ObjectId, ref: 'Mask' }],
+    masks: [
+        mask: {
+            type: Schema.Types.ObjectId,
+            ref: 'Mask'
+        },
+        price: {
+            type: Number
+        },
+        quantity: {
+            type: Number
+        }
+    ],
     totalPrice: {
         type: Currency // to use this to calculate check this: https://www.npmjs.com/package/mongoose-currency (also use .toFixed(2) after totalPrice to convert back to currency)
     },
@@ -19,6 +30,5 @@ var schema = new mongoose.Schema({
         required: true
     }
 });
-
 
 mongoose.model('Order', schema);
