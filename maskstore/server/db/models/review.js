@@ -14,12 +14,12 @@ var schema = new mongoose.Schema({
         minlength: 6
     },
     owner: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
     },
     mask: {
-        type: String,
+        type: mongoose.Schema.Types.ObjectId,
         ref: 'Mask',
         required: true
     }
