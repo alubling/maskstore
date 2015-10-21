@@ -26,20 +26,28 @@ var Review = Promise.promisifyAll(mongoose.model('Review'));
 var Order = Promise.promisifyAll(mongoose.model('Order'));
 var Mask = Promise.promisifyAll(mongoose.model('Mask'));
 
+var getRandomUsers = function() {
+    var firstNames = ['Scarlett', 'Melanie', 'Jamie', 'James', 'Ron', 'Michael', 'Dan', 'Jessica', 'Peter', 'Robert'];
+    var lastNames = ['Johansson', 'Witch', 'Sloan', 'Sanders', 'Robbie', 'Fox', 'Paper', 'Rock', 'Scissor', 'Madison'];
+    var domains = ['@gmail.com', '@hotmail.com', '@msn.com', '@bing.com', '@yahoo.com', '@google.com', '@msn.com', '@netmail.com'];
+
+    return firstNames.map(function(first) {
+        var last = lastNames[Math.floor((Math.random() * lastNames.length - 1) + 1)];
+
+        return {
+            firstName: first,
+            lastName: last,
+            email: first + '.' + last + domains[Math.floor((Math.random() * domains.length - 1) + 1)],
+            password: 'password'
+        };
+    });
+};
+
 // these are fake users for testing purposes
 
 var seedUsers = function() {
-
-    var users = [{
-        email: 'testing@fsa.com',
-        password: 'password'
-    }, {
-        email: 'obama@gmail.com',
-        password: 'potus'
-    }];
-
+    var users = getRandomUsers();
     return User.createAsync(users);
-
 };
 
 connectToDb.then(function() {
@@ -186,19 +194,19 @@ connectToDb.then(function() {
 
 // a method of seeding the entire database at once - modify and use this to drop the existing database and then reseed masks inventory
 
-/*mongoose.connection.on('open', function() {
-  mongoose.connection.db.dropDatabase(function() {
-    
-    console.log("Dropped old data, now inserting data");
-    Promise.map(Object.keys(data), function(modelName) {
-      return Promise.map(data[modelName], function(item) {
-        return models[modelName].create(item);
-      });
-    }).then(function() {
-      console.log("Finished inserting data");
-    }, console.log).then(function() {
-      mongoose.connection.close()
-    });
+// mongoose.connection.on('open', function() {
+//   mongoose.connection.db.dropDatabase(function() {
 
-  });
-});*/
+//     console.log("Dropped old data, now inserting data");
+//     Promise.map(Object.keys(data), function(modelName) {
+//       return Promise.map(data[modelName], function(item) {
+//         return models[modelName].create(item);
+//       });
+//     }).then(function() {
+//       console.log("Finished inserting data");
+//     }, console.log).then(function() {
+//       mongoose.connection.close()
+//     });
+
+//   });
+// });
