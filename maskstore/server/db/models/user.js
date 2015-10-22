@@ -4,6 +4,14 @@ var mongoose = require('mongoose');
 var validator = require('validator');
 
 var schema = new mongoose.Schema({
+    firstName: {
+        type: String,
+        minlength: 1
+    },
+    lastName: {
+        type:String,
+        minlength: 1
+    },
     email: {
         type: String,
         unique: true,
