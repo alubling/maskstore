@@ -1,21 +1,22 @@
 'use strict';
 var router = require('express').Router();
-var Orders = require('../../db/models/mask');
+var Orders = require('../../db/models/order');
 
-//Create a new order: POST /orders
-router.post('/', function(req, res, next){
-	var newOrder = req.body;
-	Orders.create(newOrder).then(function(newOrder){
-		res.status('200').json(newOrder);
+//Get all orders period.
+router.get('/', function(req, res, next){
+	Orders.find({})
+		.populate('owner')
+		.then(function(orders){
+		res.status('200').json(orders);
 	})
 	.catch(function(err){
-		console.log('Error creating order: '+err);
-	});
+		res.status('500').send("Error getting orders: "+err);
+	})
 });
 
 //Get all orders for a user: GET /orders. Is this the right way to find the referring user?
-router.get('/:userId', function(req, res, next){
-	Orders.find({owner.ref: req.params.userId}).then(function(orders){
+router.get('/user/:userId', function(req, res, next){
+	Orders.find({owner: req.params.userId}).then(function(orders){
 		res.status('200').json(orders);
 	})
 	.catch(function(err){
@@ -23,19 +24,55 @@ router.get('/:userId', function(req, res, next){
 	});
 });
 
+//get one order (just in case we need this)
+router.get('/:orderId', function(req, res, next){
+	Orders.find({_id: req.params.orderId}).then(function(order){
+		res.status('200').json(order);
+	})
+	.catch(function(err){
+		console.log('Error getting order: '+err);
+	});
+});
+
+//Create a new order: POST /orders
+router.post('/', function(req, res, next){
+	var newOrder = new Orders(req.body).save(function(err){
+		if (err) {
+			return res.status('500').send("Error creating order: "+err);
+		}
+		res.status('200').json(newOrder);
+	});
+});
+
 //Update order: PUT /orders/:OrderId
 router.put('/:orderId', function(req, res, next){
-	Orders.findOneAndUpdate({_id: req.params.OrderId}, req.body).then(function(updatedOrder){
+	Orders.findOneAndUpdate({_id: req.params.OrderId}, 
+		{$set: req.body},
+		{new: true})
+	.then(function(updatedOrder){
 		res.status('200').json(updatedOrder);
 	})
 	.catch(function(err){
-		console.log('Error updating order: '+err);
+		res.status('500').send('Error updating order: '+err);
 	});
 });
 
 //Delete order: DELETE /orders/:OrderId
 router.delete('/:orderId', function(req, res, next){
-	Orders.delete({_id: req.params.orderId}).then(function(result){
+	Orders.find({_id: req.params.orderId}).then(function(order){
+		console.log('Deleting Order: '+order+' \nfor user: '+order.owner||'guest');
+		order.remove();
 		res.status('200').send('Successfully deleted order');
 	})
-})
+	.catch(function(err){
+		console.log('Error removing order: '+err);
+	});
+});
+
+// Make sure this is after all of
+// the registered routes!
+router.use(function (req, res) {
+    res.status(404).end();
+});
+
+module.exports = router;

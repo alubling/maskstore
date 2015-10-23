@@ -18,14 +18,6 @@ router.get('/', function(req, res) {
     .catch(function(err){
     	console.log('Error getting all masks: '+err);
     });
-
-/*
-    MasksModel.find(modelParams, function (err, masks) {
-        setTimeout(function () {
-            res.send(masks);
-        }, Math.random() * 1000); // this will be a good place for some GSAP animation as the masks come in
-    });
-*/
 });
 
 
@@ -37,49 +29,43 @@ router.get('/:maskId', function (req, res) {
 	.catch(function(err){
 		console.log('Error finding mask: '+err);
 	})
-
-/*
-    MasksModel.findById(req.params.maskId, function (err, mask) {
-        setTimeout(function () {
-            res.send(mask);
-        }, Math.random() * 1000);
-    });
-*/
-
 });
 
 //create a mask
 router.post('/', function (req, res, next){
-	var newMask = req.body;
-	MasksModel.create(newMask).then(function(newMask){
-		res.status('200').json('newMask');
-	})
-	.catch(function(err){
-		console.log('Error creating mask: '+err);
-	})
-})
+	var newMask = new MasksModel(req.body).save(function(err, newMask){
+		if (err) {
+			return res.status('500').send("Error creating mask: "+err);
+		}
+		res.status('200').json(newMask);
+	});
+});
 
 //update a mask
 router.put('/:maskId', function (req, res, next){
-	var currentMask = {_id: req.params.id};
-	var updatedMask = req.body;
-	MasksModel.findOneandUpdate(currentMask, updatedMask).then(function(newMask){
-		res.status('200').json(newMask);
+	var maskUpdates = req.body;
+	MasksModel.findOneAndUpdate({_id: req.params.maskId},
+		{$set: maskUpdates},
+		{new: true})
+	.then(function(updatedMask){
+		res.status('200').json(updatedMask);
 	})
 	.catch(function(err){
-		console.log('Error updating mask: '+err);
+		res.status('500').send("Error posting mask: "+err);
 	});
-}
+});
 
 //delete a mask
 router.delete('/:maskId', function (req, res, next){
-	MasksModel.delete({_id: req.params.id}).then(function(result){
-		res.status('200').send('Successfully deleted a mask.');
+	MasksModel.findOne({_id: req.params.maskId}).then(function(mask){
+		console.log('Removing Mask: '+mask.title);
+		mask.remove();
+		res.status('200').send('Successfully removed the mask.');
 	})
 	.catch(function(err){
-		console.log('Error deleting mask: '+err);
+		console.log('Error removing mask: '+err);
 	});
-})
+});
 
 // Make sure this is after all of
 // the registered routes!
@@ -108,5 +94,4 @@ router.post('/masks/:maskId', function(req, res) {
     console.log("new order created and mask added!");
     res.send(data);
   });
-
 })*/

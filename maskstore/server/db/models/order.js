@@ -20,7 +20,7 @@ var schema = new mongoose.Schema({
             type: Currency,
             required: true
         },
-        quantity: {
+        inventory: {
             type: Number,
             required: true
         }
@@ -31,10 +31,9 @@ var schema = new mongoose.Schema({
     owner: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // how can an order be made available to both an authenticated user AND guest session?
-        required: true
     }
 });
 
-mongoose.model('Order', schema);
-
 module.exports = mongoose.model('Order', schema);
+
+

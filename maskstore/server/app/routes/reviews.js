@@ -11,7 +11,6 @@ router.get('/', function(req, res, next){
 			console.log('Error: '+err);
 		});
 	});
-});
 
 //Create Review: POST /reviews
 router.post('/', function(req, res, next){
@@ -38,7 +37,7 @@ router.put('/:maskId', function(req, res, next){
 })
 //Delete Review: DELETE /reviews/:maskId
 router.delete('/:maskId', function(req, res, next){
-	Reviews.delete({_id: req.params.maskId}).then(function(response){
+	Reviews.findOne({_id: req.params.maskId}).remove().exec().then(function(response){
 		res.status('200').send('Successfully deleted review');
 	})
 	.catch(function(err){

@@ -12,6 +12,10 @@ var schema = new mongoose.Schema({
         type:String,
         minlength: 1
     },
+    phone: {
+        type: String,
+        minlength: 10
+    },
     email: {
         type: String,
         unique: true,
@@ -73,4 +77,4 @@ schema.method('correctPassword', function(candidatePassword) {
     return encryptPassword(candidatePassword, this.salt) === this.password;
 });
 
-mongoose.model('User', schema);
+module.exports = mongoose.model('User', schema);
