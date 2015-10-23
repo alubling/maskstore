@@ -12,6 +12,10 @@ var schema = new mongoose.Schema({
         type:String,
         minlength: 1
     },
+    phone: {
+        type: String,
+        minlength: 10
+    },
     email: {
         type: String,
         unique: true,
