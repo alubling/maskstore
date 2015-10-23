@@ -78,11 +78,28 @@ function getRandomMasks(num) {
     return masks;
 };
 
+function getRandomReviews(users, masks) {
+    return users.reduce(function(c, d) {
+        return masks.reduce(function(a, b) {
+            a.push({
+                stars: chance.natural({
+                    min: 0,
+                    max: 5
+                }),
+                text: getRandText(),
+                mask: b,
+                owner: d
+            });
+            return a;
+        }, []);
+    }, []);
+};
+
 mongoose.connection.on('open', function() {
     mongoose.connection.db.dropDatabase(function() {
         // these are fake users for testing purposes
+        var users = getRandomUsers(50);
         var seedUsers = function() {
-            var users = getRandomUsers(50);
             return User.createAsync(users);
         };
 
@@ -103,10 +120,9 @@ mongoose.connection.on('open', function() {
             });
         });
 
-
         // this should be the real mask data, which needs to be accumulated
+        var masks = getRandomMasks(50);
         var seedMasks = function() {
-            var masks = getRandomMasks(50);
             return Mask.createAsync(masks);
 
         };
@@ -128,37 +144,8 @@ mongoose.connection.on('open', function() {
             });
         });
 
-
-        // these are fake reviews for testing purposes
-        var m = mongoose.model('Mask')({
-            price: 10.00,
-            inventory: 1,
-            title: 'Mask Title',
-            description: "Some description",
-            style: "eccentric",
-            color: "blue",
-            category: "costume"
-        });
-
-        var o = mongoose.model('User')({
-            email: 'xyz@gmail.com',
-            password: 'abc'
-        });
-
         var seedReviews = function() {
-
-            var reviews = [{
-                stars: 3,
-                text: 'this is the worst mask ever',
-                mask: m,
-                owner: o
-            }, {
-                stars: 5,
-                text: 'love this thing!',
-                mask: m,
-                owner: o
-            }];
-
+            var reviews = getRandomReviews(users, masks);
             return Review.createAsync(reviews);
         };
 
