@@ -88,7 +88,7 @@ function getRandomReviews(users, masks) {
                 }),
                 text: getRandText(),
                 mask: b,
-                owner: d
+                user: d
             });
             return a;
         }, []);
@@ -98,122 +98,50 @@ function getRandomReviews(users, masks) {
 mongoose.connection.on('open', function() {
     mongoose.connection.db.dropDatabase(function() {
         // these are fake users for testing purposes
-        var users = getRandomUsers(50);
-        var seedUsers = function() {
-            return User.createAsync(users);
-        };
-
-        connectToDb.then(function() {
-            User.findAsync({}).then(function(users) {
-                if (users.length === 0) {
-                    return seedUsers();
-                } else {
-                    console.log(chalk.magenta('Seems to already be user data, exiting!'));
-                    process.kill(0);
-                }
-            }).then(function() {
-                console.log(chalk.green('Seed successful!'));
-                process.kill(0);
-            }).catch(function(err) {
-                console.error(err);
-                process.kill(1);
-            });
-        });
+        var users = getRandomUsers(10);
 
         // this should be the real mask data, which needs to be accumulated
-        var masks = getRandomMasks(50);
-        var seedMasks = function() {
-            return Mask.createAsync(masks);
+        var masks = getRandomMasks(10);
+        var maskModels, userModels;
 
-        };
+        Promise.resolve(User.createAsync(users))
+            .then(function(results) {
+                console.log(chalk.green('Seeded Users successful!'));
+                userModels = results;
+                return Mask.createAsync(masks);
+            })
+            .then(function(results) {
+                console.log(chalk.green('Seeded Masks successful!'));
+                maskModels = results;
+                var reviews = getRandomReviews(userModels, maskModels);
+                return Review.createAsync(reviews);
+            })
+            .then(function(results) {
+                console.log(chalk.green('Seeded Reviews successful!'));
 
-        connectToDb.then(function() {
-            Mask.findAsync({}).then(function(masks) {
-                if (masks.length === 0) {
-                    return seedMasks();
-                } else {
-                    console.log(chalk.magenta('Seems to already be masks data, exiting!'));
-                    process.kill(0);
-                }
-            }).then(function() {
-                console.log(chalk.green('Masks seeding successful!'));
+                var orders = [{
+                    masks: [{
+                        mask: maskModels[0],
+                        price: 1,
+                        quantity: 1
+                    }, {
+                        mask: maskModels[1],
+                        price: 2,
+                        quantity: 3
+                    }],
+                    totalPrice: '$59.95',
+                    user: userModels[0]
+                }];
+
+                return Order.createAsync(orders);
+            })
+            .then(function(results) {
+                console.log(chalk.green('Seeded Orders successful!'));
                 process.kill(0);
-            }).catch(function(err) {
-                console.error(err);
+            })
+            .catch(function(err) {
+                console.log(chalk.magenta('Error:  ' + err));
                 process.kill(1);
             });
-        });
-
-        var seedReviews = function() {
-            var reviews = getRandomReviews(users, masks);
-            return Review.createAsync(reviews);
-        };
-
-        connectToDb.then(function() {
-            Review.findAsync({}).then(function(reviews) {
-                if (reviews.length === 0) {
-                    return seedReviews();
-                } else {
-                    console.log(chalk.magenta('Seems to already be review data, exiting!'));
-                    process.kill(0);
-                }
-            }).then(function() {
-                console.log(chalk.green('Reviews seeded successfully!'));
-                process.kill(0);
-            }).catch(function(err) {
-                console.error(err);
-                process.kill(1);
-            });
-        });
-
-        // these are fake orders for testing purposes
-
-        var seedOrders = function() {
-
-            var orders = [{
-                masks: [m],
-                totalPrice: '$59.95',
-                owner: o
-            }];
-
-            return Order.createAsync(orders);
-        };
-
-        connectToDb.then(function() {
-            Order.findAsync({}).then(function(orders) {
-                if (orders.length === 0) {
-                    return seedOrders();
-                } else {
-                    console.log(chalk.magenta('Seems to already be order data, exiting!'));
-                    process.kill(0);
-                }
-            }).then(function() {
-                console.log(chalk.green('Orders seeded successfully!'));
-                process.kill(0);
-            }).catch(function(err) {
-                console.error(err);
-                process.kill(1);
-            });
-        });
     });
 });
-
-
-// a method of seeding the entire database at once - modify and use this to drop the existing database and then reseed masks inventory
-
-// mongoose.connection.on('open', function() {
-//   mongoose.connection.db.dropDatabase(function() {
-
-//     console.log("Dropped old data, now inserting data");
-//     Promise.map(Object.keys(data), function(modelName) {
-//       return Promise.map(data[modelName], function(item) {
-//         return models[modelName].create(item);
-//       });
-//     }).then(function() {
-//       console.log("Finished inserting data");
-//     }, console.log).then(function() {
-//       mongoose.connection.close()
-//     });
-
-//   });
-// });

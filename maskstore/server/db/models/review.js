@@ -13,7 +13,7 @@ var schema = new mongoose.Schema({
         type: String,
         minlength: 6
     },
-    owner: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: true
