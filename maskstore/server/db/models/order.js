@@ -28,7 +28,7 @@ var schema = new mongoose.Schema({
     totalPrice: {
         type: Currency // to use this to calculate check this: https://www.npmjs.com/package/mongoose-currency (also use .toFixed(2) after totalPrice to convert back to currency)
     },
-    owner: {
+    user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // how can an order be made available to both an authenticated user AND guest session?
     }
