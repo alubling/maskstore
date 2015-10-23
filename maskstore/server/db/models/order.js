@@ -20,7 +20,7 @@ var schema = new mongoose.Schema({
             type: Currency,
             required: true
         },
-        inventory: {
+        quantity: {
             type: Number,
             required: true
         }
