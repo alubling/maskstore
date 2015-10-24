@@ -44,7 +44,7 @@ router.get('/user/:userId', function(req, res, next){
 
 //Create Review: POST /reviews
 router.post('/', function(req, res, next){
-	var review = new Reviews(req.body).save(function(err){
+	var review = new Reviews(req.body).save(function(err, review){
 		if (err) return res.status('500').send("Error creating review: "+err);
 		res.status('200').json(review);
 	})
