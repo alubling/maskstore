@@ -24,4 +24,4 @@ app.config(function($stateProvider){
 			$scope.mask = mask;
 		}
 	})
-})
+});

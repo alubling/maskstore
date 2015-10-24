@@ -32,8 +32,8 @@ router.get('/:maskId', function (req, res) {
 });
 
 //create a mask
-router.post('/', function (req, res, next){
-	var newMask = new MasksModel(req.body).save(function(err, newMask){
+router.post('/', function (req, res){
+	new MasksModel(req.body).save(function(err, newMask){
 		if (err) {
 			return res.status('500').send("Error creating mask: "+err);
 		}
@@ -42,7 +42,7 @@ router.post('/', function (req, res, next){
 });
 
 //update a mask
-router.put('/:maskId', function (req, res, next){
+router.put('/:maskId', function (req, res){
 	var maskUpdates = req.body;
 	MasksModel.findOneAndUpdate({_id: req.params.maskId},
 		{$set: maskUpdates},
@@ -56,7 +56,7 @@ router.put('/:maskId', function (req, res, next){
 });
 
 //delete a mask
-router.delete('/:maskId', function (req, res, next){
+router.delete('/:maskId', function (req, res){
 	MasksModel.findOne({_id: req.params.maskId}).then(function(mask){
 		console.log('Removing Mask: '+mask.title);
 		mask.remove();
