@@ -27,7 +27,7 @@ router.get('/:userId', function(req, res, next){
 
 // create a new user
 router.post('/', function(req, res) {
-	var newUser = new Users(req.body).save(function(err){
+	var newUser = new Users(req.body).save(function(err, newUser){
 		if (err) return res.status('500').send('Error creating user: '+err);
 		res.status('200').json(newUser);
 	});

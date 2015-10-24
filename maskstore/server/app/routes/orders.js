@@ -35,7 +35,7 @@ router.get('/:orderId', function(req, res, next){
 
 //Create a new order: POST /orders
 router.post('/', function(req, res, next){
-	var newOrder = new Orders(req.body).save(function(err){
+	var newOrder = new Orders(req.body).save(function(err, newOrder){
 		if (err) {
 			return res.status('500').send("Error creating order: "+err);
 		}
