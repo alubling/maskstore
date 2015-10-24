@@ -34,6 +34,6 @@ var schema = new mongoose.Schema({
     }
 });
 
-mongoose.model('Order', schema);
-
 module.exports = mongoose.model('Order', schema);
+
+
