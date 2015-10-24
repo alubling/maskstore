@@ -1,3 +1,15 @@
-<pre>
+<!-- <mask ng-repeat="mask in masks">
+  <div ui-view></div>
+</mask> -->
+
+<div ng-repeat='mask in masks'>
+    <a ui-sref="productsDetail({id: mask._id})">
+      <img ng-src="{{mask.image}}">
+      <p>{{mask.title}}</p>
+      <p>{{mask.price}}</p>
+    </a>
+</div>
+
+<!-- <pre>
 {{masks | json}}
-</pre>
+</pre> -->
