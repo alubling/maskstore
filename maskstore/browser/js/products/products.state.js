@@ -9,7 +9,6 @@ app.config(function($stateProvider){
 		},
 		controller: function($scope, masks){
 			$scope.masks = masks;
-			console.log($scope.masks);
 		}
 	} )
 })

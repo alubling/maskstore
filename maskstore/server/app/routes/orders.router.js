@@ -3,7 +3,7 @@ var router = require('express').Router();
 var Orders = require('../../db/models/order');
 
 //Get all orders period.
-router.get('/', function(req, res, next){
+router.get('/', function(req, res){
 	Orders.find({})
 		.then(function(orders){
 		res.status('200').json(orders);
@@ -14,7 +14,7 @@ router.get('/', function(req, res, next){
 });
 
 //Get all orders for a user: GET /orders. Is this the right way to find the referring user?
-router.get('/user/:userId', function(req, res, next){
+router.get('/user/:userId', function(req, res){
 	Orders.find({user: req.params.userId}).then(function(orders){
 		res.status('200').json(orders);
 	})
@@ -24,7 +24,7 @@ router.get('/user/:userId', function(req, res, next){
 });
 
 //get one order (just in case we need this)
-router.get('/:orderId', function(req, res, next){
+router.get('/:orderId', function(req, res){
 	Orders.find({_id: req.params.orderId}).then(function(order){
 		res.status('200').json(order);
 	})
@@ -34,8 +34,8 @@ router.get('/:orderId', function(req, res, next){
 });
 
 //Create a new order: POST /orders
-router.post('/', function(req, res, next){
-	var newOrder = new Orders(req.body).save(function(err, newOrder){
+router.post('/', function(req, res){
+	new Orders(req.body).save(function(err, newOrder){
 		if (err) {
 			return res.status('500').send("Error creating order: "+err);
 		}
@@ -44,7 +44,7 @@ router.post('/', function(req, res, next){
 });
 
 //Update order: PUT /orders/:OrderId
-router.put('/:orderId', function(req, res, next){
+router.put('/:orderId', function(req, res){
 	var orderUpdates = req.body;
 	Orders.findOneAndUpdate({_id: req.params.orderId}, 
 		{$set: orderUpdates},
@@ -58,7 +58,7 @@ router.put('/:orderId', function(req, res, next){
 });
 
 //Delete order: DELETE /orders/:OrderId
-router.delete('/:orderId', function(req, res, next){
+router.delete('/:orderId', function(req, res){
 	Orders.findOne({_id: req.params.orderId}).then(function(order){
 		console.log('Deleting Order: '+order+' \nfor user: '+order.user||'guest');
 		order.remove();
