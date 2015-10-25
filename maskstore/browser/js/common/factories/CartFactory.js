@@ -7,7 +7,7 @@ app.factory("CartFactory", function() {
         image: "http://g02.a.alicdn.com/kf/HTB1OvuLHVXXXXakXpXXq6xXFXXXm/resin-font-b-mask-b-font-font-b-Chainsaw-b-font-font-b-Massacre-b-font.jpg"
     }, {
         id: 2,
-        title: "Surgical Mask",
+        title: "Surgical Masks",
         price: 2,
         quantity: 5,
         image: "https://hardartworker.files.wordpress.com/2010/04/33292.jpg?w=600&h=600"

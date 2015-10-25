@@ -63,6 +63,7 @@
     "validator": "^4.1.0"
   },
   "devDependencies": {
-    "chance": "^0.8.0"
+    "chance": "^0.8.0",
+    "gulp-watch": "^4.3.5"
   }
 }

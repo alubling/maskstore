@@ -17,6 +17,7 @@ var eslint = require('gulp-eslint');
 var mocha = require('gulp-mocha');
 var karma = require('karma').server;
 var istanbul = require('gulp-istanbul');
+var watch = require('gulp-watch');
 
 // Development tasks
 // --------------------------------------------------------------
@@ -47,6 +48,10 @@ gulp.task('buildJS', ['lintJS'], function () {
         .pipe(babel())
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('./public'));
+});
+
+gulp.task('watch', ['buildJS'], function() {
+    return gulp.src(['./browser/js/app.js', './browser/js/**/*.js']);
 });
 
 gulp.task('testServerJS', function () {

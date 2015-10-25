@@ -9,5 +9,6 @@ app.config(function($stateProvider) {
         	$scope.orders = CartFactory.orders;
         	$scope.totalItems = CartFactory.totalItems;
         }
+        
     });
 });
