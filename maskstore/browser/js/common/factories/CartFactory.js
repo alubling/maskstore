@@ -1,34 +1,37 @@
+'use strict';
+
 app.factory("CartFactory", function() {
-    var orders = [{
+    var masks = [{
         id: 1,
-        title: "Party Mask",
+        title: "Guy Fawkes Mask",
         price: 1,
         quantity: 2,
-        image: "http://g02.a.alicdn.com/kf/HTB1OvuLHVXXXXakXpXXq6xXFXXXm/resin-font-b-mask-b-font-font-b-Chainsaw-b-font-font-b-Massacre-b-font.jpg"
+        image: "http://g03.a.alicdn.com/kf/HTB1Rmc.HVXXXXXcXFXXq6xXFXXXt/Free-shipping-V-for-Vendetta-font-b-mask-b-font-Holiday-party-Halloween-font-b-mask.jpg"
     }, {
         id: 2,
-        title: "Surgical Masks",
+        title: "Halloween Mask",
         price: 2,
         quantity: 5,
-        image: "https://hardartworker.files.wordpress.com/2010/04/33292.jpg?w=600&h=600"
+        image: "http://g03.a.alicdn.com/kf/HTB1ip54JpXXXXX0XVXXq6xXFXXX9/Devil-font-b-Scream-b-font-font-b-Mask-b-font-Halloween-Masquerade-font-b-Mask.jpg"
     }];
 
-    var getTotalItems = function() {
-        return orders.reduce(function(prev, curr) {
+    var getTotalQuantity = function() {
+        return masks.reduce(function(prev, curr) {
             return {
                 quantity: prev.quantity + curr.quantity
             };
         }, {
             quantity: 0
         }).quantity;
+
     };
 
-    var getOrders = function() {
-        return orders;
+    var getMasks = function() {
+        return masks;
     };
 
-    var getTotalPrice = function() {
-        return orders.reduce(function(prev, curr) {
+    var getSubtotal = function() {
+        return masks.reduce(function(prev, curr) {
             return {
                 price: (prev.price * prev.quantity) + (curr.price * curr.quantity),
                 quantity: 1
@@ -39,9 +42,16 @@ app.factory("CartFactory", function() {
         }).price;
     };
 
+    var removeMask = function(mask) {
+        return masks = masks.filter(function(m) {
+            return m.id !== mask.id;
+        });
+    }
+
     return {
-        totalPrice: getTotalPrice(),
-        orders: getOrders(),
-        totalItems: getTotalItems()
+        getSubtotal: getSubtotal,
+        getMasks: getMasks,
+        getTotalQuantity: getTotalQuantity,
+        removeMask: removeMask
     }
 })
