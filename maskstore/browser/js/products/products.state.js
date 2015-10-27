@@ -51,6 +51,6 @@ app.config(function($stateProvider){
 					return MasksFactory.getMasks($stateParams.category);
 			}
 		},
-		templateUrl: "js/products/products.html"
+		template: '<products></products>'
 	});
 });

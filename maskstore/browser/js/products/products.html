@@ -64,41 +64,7 @@
 </div>
 
 
-
-<div ui-view class="ui three column grid">
-  <div ng-repeat='mask in masks' class="ui special cards column" masks>
-    <!-- <div class="column"> -->
-    <div class="card">
-      <div class="blurring dimmable image">
-        <div class="ui dimmer">
-          <div class="content">
-            <div class="center">
-              <div class="ui inverted button"><a ui-sref="productsDetail({id: mask._id})">View Detail</a></div>
-            </div>
-          </div>
-        </div>
-        <img ng-src="{{mask.image}}">
-      </div>
-      <div class="content">
-        <a class="header">{{mask.title}}</a>
-        <div class="meta">
-          <span class="date">{{mask.price}}</span>
-        </div>
-      </div>
-      <div class="extra content">
-        <a>
-          <i class="tag icon"></i>
-          {{mask.category}}
-        </a>
-      </div>
-      <div class="extra">
-       Rating:
-         <div class="ui star rating" data-rating="5" ng-model="rating"></div>
-      </div>
-    </div>
-    <!-- </div> -->
-  </div>
-</div>
+<products></products>
 
 <!-- <pre>
 {{masks | json}}

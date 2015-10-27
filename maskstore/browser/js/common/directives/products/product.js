@@ -1,6 +1,7 @@
 app.directive('products', function(){
   return {
-    restrict: 'A',
+    restrict: 'E',
+    templateUrl: 'js/common/directives/products/products.html',
     link: function(scope, element, attrs) {
       $('.ui.dropdown')
         .dropdown({
