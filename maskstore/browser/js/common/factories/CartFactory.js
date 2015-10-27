@@ -1,57 +1,60 @@
-'use strict';
-
 app.factory("CartFactory", function() {
-    var masks = [{
-        id: 1,
-        title: "Guy Fawkes Mask",
-        price: 1,
-        quantity: 2,
-        image: "http://g03.a.alicdn.com/kf/HTB1Rmc.HVXXXXXcXFXXq6xXFXXXt/Free-shipping-V-for-Vendetta-font-b-mask-b-font-Holiday-party-Halloween-font-b-mask.jpg"
-    }, {
-        id: 2,
-        title: "Halloween Mask",
-        price: 2,
-        quantity: 5,
-        image: "http://g03.a.alicdn.com/kf/HTB1ip54JpXXXXX0XVXXq6xXFXXX9/Devil-font-b-Scream-b-font-font-b-Mask-b-font-Halloween-Masquerade-font-b-Mask.jpg"
-    }];
-
-    var getTotalQuantity = function() {
-        return masks.reduce(function(prev, curr) {
-            return {
-                quantity: prev.quantity + curr.quantity
-            };
-        }, {
-            quantity: 0
-        }).quantity;
-
-    };
-
-    var getMasks = function() {
-        return masks;
-    };
-
-    var getSubtotal = function() {
-        return masks.reduce(function(prev, curr) {
-            return {
-                price: (prev.price * prev.quantity) + (curr.price * curr.quantity),
-                quantity: 1
-            };
-        }, {
-            price: 0,
-            quantity: 0
-        }).price;
-    };
-
-    var removeMask = function(mask) {
-        return masks = masks.filter(function(m) {
-            return m.id !== mask.id;
-        });
-    }
-
     return {
-        getSubtotal: getSubtotal,
-        getMasks: getMasks,
-        getTotalQuantity: getTotalQuantity,
-        removeMask: removeMask
+        getCart: function(userId) {
+            return new Cart(userId);
+        },
+        getExistingCart: function(userId, cartData) {
+            return new Cart(userId, cartData);
+        }
     }
 })
+
+function Cart(userId, cartData) {
+    this.masks = [];
+    this.isNew = true;
+    this.userId = userId;
+
+    // if cartData is available, use it as the existing data for new cart
+    if (cartData) {
+        this.masks = cartData.masks;
+        this.subtotal = cartData.subtotal;
+        this.isNew = false;
+        this.userId = userId;
+    }
+};
+
+Cart.prototype.add = function(mask) {
+    this.masks.push(mask);
+};
+
+Cart.prototype.remove = function(mask) {
+    var indexFound = -1;
+
+    for (var i = 0; i < this.masks.length; i++) {
+        if (mask.title === this.masks[i].title) {
+            indexFound = i;
+            break;
+        }
+    }
+
+    if (indexFound >= 0)
+        var removed = this.masks.splice(indexFound, 1)[0];
+};
+
+Cart.prototype.getMasks = function() {
+    return this.masks;
+};
+
+Cart.prototype.getSubtotal = function() {
+    return this.masks.reduce(function(p, c) {
+        return p.price + c.price;
+    }, 0);
+};
+
+Cart.prototype.getQuantity = function() {
+    return this.masks.length;
+}
+
+Cart.prototype.clear = function() {
+    this.masks = [];
+}

@@ -5,12 +5,12 @@
         <div class="panel-body">
             <table class="table">
                 <tr>
-                    <th class="col-md-8"></th>
+                    <th class="col-md-7"></th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th></th>
                 </tr>
-                <tr ng-repeat="mask in cart.getMasks()">
+                <tr ng-repeat="mask in masks">
                     <td>
                         <div><img src="{{ mask.image }}" width="100" height="100" /></div>
                         {{ mask.title }}
@@ -19,9 +19,9 @@
                         {{ mask.price | currency }}
                     </td>
                     <td>
-                        <input type="text" class="form-control" placeholder="{{ mask.quantity }}" ng-model="mask.quantity">
+                        <input type="text" class="form-control" placeholder="{{ mask.quantity }}" ng-model="mask.quantity" ng-change="update()">
                     </td>
-                    <td><a type="button" class="btn btn-danger" ng-click="cart.removeMask(mask)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                    <td><a type="button" class="btn btn-danger" ng-click="removeMask(mask)"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 <tr>
                     <td>
@@ -31,13 +31,13 @@
                     <td></td>
                     <td>
                         <div>
-                            <b>Subtotal: ({{ cart.getTotalQuantity() }} Item<span ng-if="totalQuantity > 1">s</span>)</b> {{ cart.getSubtotal() | currency }}
+                            <b>Subtotal: ({{ masks.length }} Item<span ng-if="masks.length > 1">s</span>)</b> {{ subtotal | currency }}
                         </div>
                     </td>
                 </tr>
             </table>
             <div class="text-right">
-                <a type="button" class="btn btn-primary" href="#/cart">Update <span class="glyphicon glyphicon-pencil" ></span></a>
+                <a type="button" class="btn btn-primary" href="#/cart">Update <span class="glyphicon glyphicon-pencil" ng-click="update()"></span></a>
                 <a type="button" class="btn btn-danger" href="#/cart">Checkout <span class="glyphicon glyphicon-shopping-cart" ></span></a>
             </div>
         </div>
