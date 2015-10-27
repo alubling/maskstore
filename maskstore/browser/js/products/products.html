@@ -9,7 +9,63 @@
       <p>{{mask.price}}</p>
     </a>
 </div> -->
-<div class="ui three column grid">
+
+<div class="ui basic segment" products>
+
+  <!-- <div class="ui compact menu">
+    <div class="ui simple dropdown item">
+      Category
+      <i class="dropdown icon"></i>
+      <div class="menu">
+        <div class="item" data-value="costume">Costume</div>
+        <div class="item">Choice 2</div>
+        <div class="item">Choice 3</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui selection dropdown">
+    <input name="category" type="hidden" value="default">
+    <i class="dropdown icon"></i>
+    <div class="text">Category</div>
+    <div class="menu">
+        <div class="ui simple dropdown item" data-value="costume">Costume</div>
+        <div class="ui simple dropdown item" data-value="burglary">Burglary</div>
+        <div class="ui simple dropdown item" data-value="handling liquid nitrogen">Handling Liquid Nitrogen</div>
+    </div>
+   </div> -->
+
+   <!-- <select class="ui search dropdown" ng-options>
+     <option value="">Category</option>
+     <a ui-sref='products.category({category: mask.category})'><option value="costume">Costume</option></a>
+     <option value="burglary">Burglary</option>
+     <option value="armed robbery">Armed Robbery</option>
+     <option value="meth making">Meth Making</option>
+     <option value="handling liquid nitrogen">Handling Liquid Nitrogen</option>
+     <option value="skiing">Skiing</option>
+   </select> -->
+
+   <select class="ui search dropdown" ng-model="categoryWatch" ng-options="opt.value as opt.label for opt in options" ng-change="stateChange(categoryWatch)">
+     <option value="">Category</option>
+     <option value="costume">Costume</option>
+     <option value="burglary">Burglary</option>
+     <option value="armed robbery">Armed Robbery</option>
+     <option value="meth making">Meth Making</option>
+     <option value="handling liquid nitrogen">Handling Liquid Nitrogen</option>
+     <option value="skiing">Skiing</option>
+   </select>
+
+   <a ui-sref="products.category({category: undefined})">
+     <div class="ui primary button reset">
+      Reset
+     </div>
+   </a>
+
+</div>
+
+
+
+<div ui-view class="ui three column grid">
   <div ng-repeat='mask in masks' class="ui special cards column" masks>
     <!-- <div class="column"> -->
     <div class="card">
@@ -37,7 +93,7 @@
       </div>
       <div class="extra">
        Rating:
-         <div class="ui star rating" data-rating="4" ng-model="rating"></div>
+         <div class="ui star rating" data-rating="5" ng-model="rating"></div>
       </div>
     </div>
     <!-- </div> -->

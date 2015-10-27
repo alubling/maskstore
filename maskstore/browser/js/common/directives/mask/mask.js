@@ -5,6 +5,9 @@ app.directive('mask', function(){
       $('.special.cards .image').dimmer({
         on: 'hover'
       });
+      scope.addToCart = function(mask) {
+        console.log("adding this mask with a title of: ", mask.title);
+      }
     }
   };
 });
