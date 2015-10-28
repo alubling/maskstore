@@ -43,6 +43,9 @@ var User = new mongoose.Schema({
     isAdmin: {
         type: Boolean,
         default: false
+    },
+    cart: {
+        type: Object
     }
 });
 
