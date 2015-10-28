@@ -58,4 +58,22 @@ router.delete('/:userId', function(req, res) {
 	});
 });
 
+//get a cart by userId
+router.get('/:userId/cart', function(req, res){
+	Users.findOne({_id: req.params.userId}).then(function(user){
+		console.log(user.cart);
+		res.json(user.cart);
+	})
+})
+
+//update a cart by userId
+router.put('/:userId/cart', function(req, res){
+	Users.findOneAndUpdate({_id: req.params.userId},
+		{$set: {cart: req.body}},
+		{new: true})
+		.then(function(user){
+			res.json(user.cart);
+		});
+});
+
 module.exports = router;

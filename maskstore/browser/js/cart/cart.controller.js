@@ -1,10 +1,10 @@
 'use strict';
 
 app.controller('CartCtrl', function($scope, ShoppingCartService) {
-    $scope.cart = ShoppingCartService.getCart(123);
+    $scope.cart = ShoppingCartService.getCart();
 
     // test data -- will remove when we have the ability to add products into shopping cart
-    if ($scope.cart.isNew) {
+  /*  if ($scope.cart.isNew) {
         $scope.cart.add({
             id: 1,
             title: "Guy Fawkes Mask",
@@ -28,7 +28,7 @@ app.controller('CartCtrl', function($scope, ShoppingCartService) {
         });
         $scope.cart.isNew = false;
     }
-
+*/
     $scope.masks = $scope.cart.getMasks();
     $scope.subtotal = $scope.cart.getSubtotal();
 
@@ -45,7 +45,7 @@ app.controller('CartCtrl', function($scope, ShoppingCartService) {
         $scope.subtotal = $scope.cart.getSubtotal();
     };
 
-    $scope.$watch('cart', function() {
+    /*$scope.$watch('cart', function() {
         ShoppingCartService.saveCart($scope.cart);
-    }, true);
+    }, true);*/
 });

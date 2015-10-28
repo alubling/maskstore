@@ -1,7 +1,7 @@
 app.factory("CartFactory", function() {
     return {
-        getCart: function(userId) {
-            return new Cart(userId);
+        getCart: function(userId, data) {
+            return new Cart(userId, data);
         },
         getExistingCart: function(userId, cartData) {
             return new Cart(userId, cartData);

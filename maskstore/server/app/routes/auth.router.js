@@ -2,20 +2,6 @@
 var router = require('express').Router();
 var User = require('../../db/models/user');
 
-router.post('/login', function (req, res){
-	if (!req.body.email || !req.body.password){
-		return res.status('401').send('Error: Unauthorized. Must provide email and password.');
-	}
-	User.findOne({email: req.body.email})
-	.then(function(user){
-		console.log(user);
-		if (!user || !user.authenticate(req.body.password)){
-			return res.status('401').send('Error: Unauthorized');
-		}
-		return res.status('200').json(user);
-	})
-})
-
 router.post('/signup', function (req, res){
  	User.findOne({email: req.body.email}).then(function(user){
 		if (user){
