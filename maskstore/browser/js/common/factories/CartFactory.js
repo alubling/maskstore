@@ -1,30 +1,40 @@
 app.factory("CartFactory", function() {
     return {
-        getCart: function(userId) {
-            return new Cart(userId);
-        },
-        getExistingCart: function(userId, cartData) {
-            return new Cart(userId, cartData);
+        getCart: function(userId, data) {
+            return new Cart(userId, data);
         }
     }
 })
 
 function Cart(userId, cartData) {
     this.masks = [];
-    this.isNew = true;
     this.userId = userId;
+    this.subtotal = 0;
+    this.quantity = 0;
 
     // if cartData is available, use it as the existing data for new cart
     if (cartData) {
         this.masks = cartData.masks;
         this.subtotal = cartData.subtotal;
-        this.isNew = false;
         this.userId = userId;
+        this.quantity = cartData.quantity;
     }
 };
 
 Cart.prototype.add = function(mask) {
-    this.masks.push(mask);
+
+    var found = false;
+    for (var i = 0; i < this.masks.length; i++) {
+        if (this.masks[i].title === mask.title) {
+            this.masks[i].quantity++;
+            found = true;
+            break;
+        }
+    }
+    if (!found) {
+        mask.quantity = 1;
+        this.masks.push(mask);
+    }
 };
 
 Cart.prototype.remove = function(mask) {
@@ -37,8 +47,9 @@ Cart.prototype.remove = function(mask) {
         }
     }
 
-    if (indexFound >= 0)
+    if (indexFound >= 0) {
         var removed = this.masks.splice(indexFound, 1)[0];
+    }
 };
 
 Cart.prototype.getMasks = function() {
@@ -46,13 +57,19 @@ Cart.prototype.getMasks = function() {
 };
 
 Cart.prototype.getSubtotal = function() {
-    return this.masks.reduce(function(p, c) {
-        return p.price + c.price;
+    return this.masks.map(function(m) {
+        return m.quantity * m.price;
+    }).reduce(function(p, c) {
+        return p + c;
     }, 0);
 };
 
 Cart.prototype.getQuantity = function() {
-    return this.masks.length;
+    return this.masks.map(function(m) {
+        return parseInt(m.quantity);
+    }).reduce(function(p, c) {
+        return p + c;
+    }, 0);
 }
 
 Cart.prototype.clear = function() {
