@@ -7,7 +7,7 @@ app.service('ShoppingCartService', function(localStorageService, CartFactory, Au
     // getCart() will create a new cart and return that.
     shoppingCartService.getCart = function(userId) {
         if (userId) {
-            return $http.get('/api/users/:userId/cart')
+            return $http.get('/api/users/'+userId+'/cart')
                 .then(function(res) {
                     return CartFactory.getCart(userId, res.data);
                 });
@@ -25,12 +25,15 @@ app.service('ShoppingCartService', function(localStorageService, CartFactory, Au
             });
         }
     };
+       
 
     // saves cart into localStorage
     shoppingCartService.saveCart = function(cart) {
         if (AuthService.isAuthenticated()) {
-            return $http.put('/api/users/:userId/cart', cart)
+            return $http.put('/api/users/'+cart.userId+'/cart', cart)
                 .then(function(res) {
+                    console.log('we made it! added to cart and saved. check out the updated cart:');
+                    console.log(res.data);
                     return res.data;
                 });
         } else {

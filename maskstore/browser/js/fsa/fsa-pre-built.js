@@ -48,10 +48,9 @@
         ]);
     });
 
-    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q) {
+    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q, $state) {
 
         function onSuccessfulLogin(response) {
-            console.log(response);
             var data = response.data;
             Session.create(data._id, data);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
@@ -88,9 +87,8 @@
         };
 
         this.login = function (credentials) {
-            return $http.post('/api/auth/login', credentials)
+            return $http.post('/login', credentials)
                 .then(function(response){
-                    console.log(response);
                     return response;
                 })
                 .then(onSuccessfulLogin)
@@ -100,7 +98,7 @@
         };
 
         this.logout = function () {
-            return $http.get('/api/auth/logout').then(function () {
+            return $http.get('/logout').then(function () {
                 Session.destroy();
                 $rootScope.$broadcast(AUTH_EVENTS.logoutSuccess);
             });
