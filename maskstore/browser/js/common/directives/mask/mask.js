@@ -5,6 +5,11 @@ app.directive('mask', function(CartFactory, ShoppingCartService, AuthService) {
             $('.special.cards .image').dimmer({
                 on: 'hover'
             });
+            $('.rating')
+              .rating({
+                maxRating: 5,
+                disable: true
+            });
             scope.addToCart = function(mask) {
                 console.log("adding this mask with a title of: ", mask.title);
                 AuthService.getLoggedInUser().then(function(res){
