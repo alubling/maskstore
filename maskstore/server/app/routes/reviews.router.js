@@ -24,7 +24,9 @@ router.get('/:reviewId', function(req, res){
 
 //Get All Reviews for a particular mask: GET /reviews/mask/:maskId
 router.get('/mask/:maskId', function(req, res){
-	Reviews.find({mask: req.params.maskId}).then(function(reviews){
+	Reviews.find({mask: req.params.maskId})
+	.populate('user') // this populates the data from the user reference, since user is an id of a user but we need 
+	.then(function(reviews){
 		res.status('200').json(reviews);
 	})
 	.catch(function(err){
@@ -55,7 +57,7 @@ router.put('/:reviewId', function(req, res){
 	var reviewUpdates = req.body;
 
 	Reviews.findOneAndUpdate({_id: req.params.reviewId},
-		{$set: reviewUpdates}, 
+		{$set: reviewUpdates},
 		{new: true})
 	.then(function(updatedReview){
 		res.status('200').json(updatedReview);
