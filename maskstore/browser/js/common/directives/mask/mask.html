@@ -79,6 +79,51 @@
 
 </div>
 
+<div class="ui three column grid">
+  <div class="ui column text basic segment">
+    <h2 class='ui header'>Reviews</h2>
+  </div>
+</div>
+<div ui-view class="ui three column grid">
+  <div ng-repeat='review in reviews' class="ui special cards column">
+
+    <div class='ui column raised very padded text container basic segment'>
+      <h2 class='ui header'>{{review.user.firstName}}  <span class="ui large star rating" ng-model="rrating" data-rating="{{review.stars}}"></span></h2>
+      <p>{{review.text}}</p>
+    </div>
+    <!-- <div class="column"> -->
+    <!-- <div class="card">
+      <div class="blurring dimmable image">
+        <div class="ui dimmer">
+          <div class="content">
+            <div class="center">
+              <div class="ui inverted button"><a ui-sref="productsDetail({id: mask._id})">View Detail</a></div>
+            </div>
+          </div>
+        </div>
+        <img ng-src="{{mask.image}}">
+      </div>
+      <div class="content">
+        <a class="header">{{mask.title}}</a>
+        <div class="meta">
+          <span class="date">{{mask.price}}</span>
+        </div>
+      </div>
+      <div class="extra content">
+        <a>
+          <i class="tag icon"></i>
+          {{mask.category}}
+        </a>
+      </div>
+      <div class="extra">
+       Rating:
+         <div class="ui star rating" data-rating="5" ng-model="rating"></div>
+      </div>
+    </div> -->
+    <!-- </div> -->
+  </div>
+</div>
+
   <!-- <div class="left floated center aligned seven wide column"> -->
     <!-- <div class='ui right floated center aligned segment'> -->
     <!-- <div class="ui three statistics">

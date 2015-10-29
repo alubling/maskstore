@@ -35,10 +35,14 @@ app.config(function($stateProvider){
 		resolve: {
 			mask: function(MasksFactory, $stateParams) {
 				return MasksFactory.getMask($stateParams.id);
+			},
+			reviews: function(ReviewsFactory, $stateParams) {
+				return ReviewsFactory.getReviews($stateParams.id);
 			}
 		},
-		controller: function($scope, mask) {
+		controller: function($scope, mask, reviews) {
 			$scope.mask = mask;
+			$scope.reviews = reviews;
 		}
 	})
 	.state('products.category', {
