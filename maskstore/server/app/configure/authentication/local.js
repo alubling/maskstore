@@ -13,7 +13,7 @@ module.exports = function (app) {
         User.findOne({ email: email })
             .then(function (user) {
                 // user.correctPassword is a method from the User schema.
-                if (!user || !user.correctPassword(password)) {
+                if (!user || !user.authenticate(password)) {
                     done(null, false);
                 } else {
                     // Properly authenticated.
@@ -28,7 +28,7 @@ module.exports = function (app) {
 
     // A POST /login route is created to handle login.
     app.post('/login', function (req, res, next) {
-
+        console.log("Logging in!")
         var authCb = function (err, user) {
 
             if (err) return next(err);
@@ -41,13 +41,13 @@ module.exports = function (app) {
 
             // req.logIn will establish our session.
             req.logIn(user, function (loginErr) {
+                console.log(user);
                 if (loginErr) return next(loginErr);
                 // We respond with a response object that has user with _id and email.
                 res.status(200).send({
                     user: _.omit(user.toJSON(), ['password', 'salt'])
                 });
             });
-
         };
 
         passport.authenticate('local', authCb)(req, res, next);

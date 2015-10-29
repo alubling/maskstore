@@ -53,7 +53,13 @@ function getRandomUsers(num) {
                 phone: chance.phone(),
                 email: chance.email(),
                 password: 'password', // default password so we can login
-                isAdmin: chance.weighted([true, false], [5, 95])
+                isAdmin: chance.weighted([true, false], [5, 95]),
+                cart: {
+                    masks: [],
+                    userid: null,
+                    subtotal: 0,
+                    quantity: 0
+                }
             }));
     };
 

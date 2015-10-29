@@ -15,9 +15,9 @@ function Cart(userId, cartData) {
     // if cartData is available, use it as the existing data for new cart
     if (cartData) {
         this.masks = cartData.masks;
-        this.subtotal = cartData.subtotal;
-        this.userId = userId;
-        this.quantity = cartData.quantity;
+/*        this.subtotal = cartData.subtotal;
+*/        this.userId = userId;
+        /*this.quantity = cartData.quantity;*/
     }
 };
 
