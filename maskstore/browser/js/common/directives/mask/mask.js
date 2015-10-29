@@ -12,20 +12,21 @@ app.directive('mask', function(CartFactory, ShoppingCartService, AuthService) {
             });
             scope.addToCart = function(mask) {
                 console.log("adding this mask with a title of: ", mask.title);
-                AuthService.getLoggedInUser().then(function(res){
-                  var cart = ShoppingCartService.getCart(res.user._id);
-                  console.log('Found the user\'s current cart: ');
-                  console.log(cart);
-                  return cart;
-                })
-                .then(function(cart) {
-                  mask.quantity = 1;
-                  cart.add(mask);
-                  return cart;
-                })
-                .then(function(cart) {
-                  ShoppingCartService.saveCart(cart);
-                });
+                AuthService.getLoggedInUser()
+                    .then(function(res) {
+                        var userId = res === null ? null : res.user._id;
+                        var cart = ShoppingCartService.getCart(userId);
+                        console.log('Adding Cart with UserId: (' + userId + ')');
+                        return cart;
+                    })
+                    .then(function(cart) {
+                        mask.quantity = 1;
+                        cart.add(mask);
+                        return cart;
+                    })
+                    .then(function(cart) {
+                        ShoppingCartService.saveCart(cart);
+                    });
             }
         }
     };

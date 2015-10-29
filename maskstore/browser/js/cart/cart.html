@@ -1,11 +1,15 @@
 <div class="container">
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h3>Shopping Cart</h3></div>
+            <h3>Shopping Cart</h3>
+        </div>
         <div class="panel-body">
-            <table class="table">
+            <table class="ui selectable inverted table">
                 <tr>
-                    <th class="col-md-7"></th>
+                    <h1 ng-show="quantity == 0">Your Shopping Cart is empty.</h1>
+                </tr>
+                <tr ng-show="quantity">
+                    <th class="col-md-4"></th>
                     <th>Price</th>
                     <th>Quantity</th>
                     <th></th>
@@ -31,15 +35,14 @@
                     <td></td>
                     <td>
                         <div>
-                            <span ng-show="quantity > 0"><b>Subtotal: ({{ quantity }} Item<span ng-if="quantity > 1">s</span>)</b> {{ subtotal | currency }}</span>
-                            <b ng-show="quantity == 0">Cart is empty</b>
+                            <span ng-show="quantity"><b>Subtotal: ({{ quantity }} Item<span ng-if="quantity">s</span>)</b> {{ subtotal | currency }}</span>
                         </div>
                     </td>
                 </tr>
             </table>
-            <div class="text-right">
-                <a type="button" ng-show="quantity > 0" class="btn btn-primary" href="#/cart">Update <span class="glyphicon glyphicon-pencil" ng-click="update()"></span></a>
-                <a type="button" ng-show="quantity > 0" class="btn btn-danger" href="#/cart">Checkout <span class="glyphicon glyphicon-shopping-cart" ></span></a>
+            <div class="text-right" ng-show="quantity > 0">
+                <a type="button" class="btn btn-primary" href="#/cart">Update <span class="glyphicon glyphicon-pencil" ng-click="update()"></span></a>
+                <a type="button" class="btn btn-danger" href="#/cart">Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
             </div>
         </div>
     </div>
