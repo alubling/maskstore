@@ -58,10 +58,18 @@ router.delete('/:userId', function(req, res) {
 	});
 });
 
-//get a cart by userId
+//get a cart by userId. If no cart exists, create one!
 router.get('/:userId/cart', function(req, res){
 	Users.findOne({_id: req.params.userId}).then(function(user){
-		console.log(user.cart);
+		console.log(user);
+		if (!user.cart){
+			user.cart = {
+                    masks: [],
+                    userid: req.params.userId,
+                    subtotal: 0,
+                    quantity: 0
+                }
+		}
 		res.json(user.cart);
 	})
 })

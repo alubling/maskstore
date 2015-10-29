@@ -3,6 +3,9 @@ var crypto = require('crypto');
 var mongoose = require('mongoose');
 var validator = require('validator');
 
+require('mongoose-currency').loadType(mongoose);
+var Currency = mongoose.Types.Currency;
+
 var User = new mongoose.Schema({
     firstName: {
         type: String,
@@ -45,7 +48,25 @@ var User = new mongoose.Schema({
         default: false
     },
     cart: {
-        type: Object
+        type: Object,
+        masks: [{
+            mask: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: 'Mask'
+            },
+            price: { 
+                type: Currency,
+                required: true
+            },
+            quantity: {
+                type: Number,
+                required: true
+            }
+        }],
+        userid: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        }
     }
 });
 

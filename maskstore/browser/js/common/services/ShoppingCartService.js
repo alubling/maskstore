@@ -1,75 +1,43 @@
 app.service('ShoppingCartService', function(localStorageService, CartFactory, AuthService, $http, $q) {
-    // load existing cartData if exists
-    var carts = (localStorageService.get('cartsData') || []).map(function(c) {
-        return CartFactory.getCart(c.userId, c);
-    });
-
     var shoppingCartService = this;
+    var LOCAL_STORAGE_KEY = "cartsData";
 
-    // return the user's shopping cart. 
-    // getCart() will create a new cart if one doesn't already exist
+    // if userId is available, getCart() will return the saved cart from the db
+    // otherwise it will return one from localStorage if available. If not, 
+    // getCart() will create a new cart and return that.
     shoppingCartService.getCart = function(userId) {
-        return $q(function(resolve, reject){
-            if (userId) {
-                   return $http.get('/api/users/:userId/cart').then(function(res){
-                        if(!res) {
-                            reject('Error: Could not find this user. No cart found.');
-                        }
-                        resolve(CartFactory.getCart(userId, res.data));
-                    });
-            }
-            else {
-                var res = carts.filter(function(c) {
-                    return c.userId === userId;
+        if (userId) {
+            return $http.get('/api/users/'+userId+'/cart')
+                .then(function(res) {
+                    return CartFactory.getCart(userId, res.data);
                 });
-                if (res.length === 1) {
-                    resolve(res[0]);
-                } 
-                else {
-                    var newCart = CartFactory.getCart(userId);
-                    carts.push(newCart);
-                    localStorageService.set('cartsData', carts);
-                    resolve(newCart);
+        } else {
+            return $q(function(resolve, reject) {
+                var cartsData = localStorageService.get(LOCAL_STORAGE_KEY);
+                if (cartsData) {
+                    return resolve(CartFactory.getCart(userId, cartsData));
                 }
-            }
-        });
+                else {
+                    var cart = CartFactory.getCart(userId);
+                    localStorageService.set(LOCAL_STORAGE_KEY, cart);
+                    return resolve(cart);
+                }
+            });
+        }
     };
        
 
-    // saves all carts into localStorage
+    // saves cart into localStorage
     shoppingCartService.saveCart = function(cart) {
-    
-        $q(function(resolve, reject){
-            if (AuthService.isAuthenticated()) {
-              return  $http.put('/api/users/:userId/cart', cart).then(function(res){
-                    if(!res){
-                        reject('Could not save the cart.');
-                    }
-                    resolve(res.data);
-              });
-            }
-            else {
-                for (var i = 0; i < carts.length; i++) {
-                    if (carts[i].userId === cart.userId) {
-                        console.log('auto saving');
-                        cart.isNew = false;
-                        carts[i] = cart;
-                        localStorageService.set('cartsData', carts);
-                        resolve();
-                    }
-                }
-            }
-        });
-    };
-
-    // clear shopping cart
-    shoppingCartService.clearCart = function(cart) {
-        for (var i = 0; i < carts.length; i++) {
-            if (carts[i].userId === cart.userId) {
-                cart.clear();
-                localStorageService.set('cartsData', carts);
-                break;
-            }
+        if (AuthService.isAuthenticated()) {
+            return $http.put('/api/users/'+cart.userId+'/cart', cart)
+                .then(function(res) {
+                    console.log('we made it! added to cart and saved. check out the updated cart:');
+                    console.log(res.data);
+                    return res.data;
+                });
+        } else {
+            localStorageService.set(LOCAL_STORAGE_KEY, cart);
         }
-    };
+    }
 });
