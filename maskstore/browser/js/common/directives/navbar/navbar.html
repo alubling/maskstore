@@ -2,14 +2,16 @@
   <div class="ui inverted vertical masthead center aligned segment">
     <div class="ui container">
       <div class="ui large secondary inverted pointing menu">
-        <
-        <a class="active item">Home</a>
-        <a class="item">About</a>
-        <a class="item">Company</a>
-        <a class="item">Careers</a>
+        <a ng-repeat="item in items" class="item" ui-sref-active="active" ui-sref="{{item.state}}">{{item.label}}</a>
         <div class="right item">
-          <a class="ui inverted button">Log in</a>
-          <a class="ui inverted button">Sign Up</a>
+          <a class="item" ui-sref="cart"><i class="shop icon"></i></a>
+          <div ng-show="!user" class="guest">
+            <a class="ui inverted button" ui-sref="login">Log in</a>
+            <a class="ui inverted button" ui-sref="login">Sign Up</a>
+          </div>
+            <a ng-show="user" class="item" ui-sref="account">My Account</a>
+            <a ng-show="user" class= "ui inverted button" ng-click="logout()">Logout</a>
+          </div>
         </div>
       </div>
     </div>
@@ -29,10 +31,7 @@
     </ul>
     <button ng-show="!user" ui-sref="login" class="ui inverted button">Login</button>
     <button ng-show="!user" ui-sref="login" class="ui inverted button">Sign Up</button>
-    <div ng-show="user" class="welcome">
-        <span>Welcome, {{ user.email }}!</span>
-        <a ng-click="logout()">Logout</a>
-    </div>
+    
 </div>
  -->
 
