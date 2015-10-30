@@ -1,16 +1,39 @@
 <form id="login-form" name="loginForm" ng-submit="loginForm.$valid && sendLogin(login)">
 
     <alert type="danger" ng-show="error">
-        {{ error }}
+            {{ error }}
     </alert>
-
-    <div class="form-group">
-        <label for="email">Email Address*:</label>
-        <input type="text" ng-model="login.email" class="form-control" id="email" placeholder="Enter email">
+    <div class="ui two column middle aligned very relaxed stackable grid">
+      <div class="column">
+        <div class="ui form">
+          <div class="field">
+            <label>Username</label>
+            <div class="ui left icon input">
+              <input type="text" ng-model="login.email" id="email" placeholder="Enter email">
+              <i class="user icon"></i>
+            </div>
+          </div>
+          <div class="field">
+            <label>Password</label>
+            <div class="ui left icon input">
+              <input type="password" ng-model="login.password" id="password" placeholder="Enter password">
+              <i class="lock icon"></i>
+            </div>
+          </div>
+          <div ng-click="loginForm.$valid && sendLogin(login)" class="ui blue submit button">Login</div>
+        </div>
+      </div>
+      <div class="ui vertical divider">
+        OR
+      </div>
+      <div class="center aligned column">
+        <div class="g-signin2" data-onsuccess="onSignIn"><oauth-button provider-name="Google"></oauth-button></div>
+        <!-- <p><oauth-button provider-name="Facebook"></oauth-button></p>
+        <p><oauth-button provider-name="Twitter"></oauth-button></p> -->
+        <div ui-sref="signup" class="ui big green labeled icon button">
+          <i class="signup icon"></i>
+          Sign Up
+        </div>
+      </div>
     </div>
-    <div class="form-group">
-        <label for="login-password">Password*:</label>
-        <input type="password" ng-model="login.password" class="form-control" id="login-password" placeholder="Password">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
