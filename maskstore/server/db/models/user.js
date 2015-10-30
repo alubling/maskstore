@@ -26,7 +26,8 @@ var User = new mongoose.Schema({
         validate: [validator.isEmail, 'invalid email']
     },
     password: {
-        type: String
+        type: String,
+        reset: Boolean
     },
     salt: {
         type: String
@@ -38,10 +39,15 @@ var User = new mongoose.Schema({
         tokenSecret: String
     },
     facebook: {
-        id: String
+        id: String,
+        username: String,
+        token: String
     },
     google: {
-        id: String
+        id: String,
+        name: String,
+        email: String,
+        token: String
     },
     isAdmin: {
         type: Boolean,

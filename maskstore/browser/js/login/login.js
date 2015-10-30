@@ -3,12 +3,12 @@ app.config(function ($stateProvider) {
     $stateProvider.state('login', {
         url: '/login',
         templateUrl: 'js/login/login.html',
-        controller: 'LoginCtrl'
+        controller: 'AuthCtrl'
     });
 
 });
 
-app.controller('LoginCtrl', function ($scope, AuthService, $state) {
+app.controller('AuthCtrl', function ($scope, AuthService, $state) {
     $scope.login = {};
     $scope.signup = {};
     $scope.error = null;
