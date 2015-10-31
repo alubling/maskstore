@@ -1,17 +1,15 @@
 <div class="container">
     <div class="panel panel-default">
-        <div class="panel-heading">
+        <div class="panel-body  ui inverted segment">
             <h3>Shopping Cart</h3>
-        </div>
-        <div class="panel-body">
             <table class="ui selectable inverted table">
                 <tr>
                     <h1 ng-show="quantity == 0">Your Shopping Cart is empty.</h1>
                 </tr>
                 <tr ng-show="quantity">
-                    <th class="col-md-4"></th>
-                    <th>Price</th>
-                    <th>Quantity</th>
+                    <th class="col-lg-8"></th>
+                    <th class="col-lg-2">Price</th>
+                    <th class="col-lg-2">Quantity</th>
                     <th></th>
                 </tr>
                 <tr ng-repeat="mask in masks">
@@ -26,16 +24,13 @@
                         <input type="text" class="form-control" placeholder="{{ mask.quantity }}" ng-model="mask.quantity" ng-change="update(mask)">
                     </td>
                 </tr>
-                    <td><a ng-show="!isCheckout" type="button" class="btn btn-danger" ng-click="removeMask(mask)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                <td><a ng-show="!isCheckout" type="button" class="btn btn-danger" ng-click="removeMask(mask)"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
+            </table>
+            <table class="ui selectable inverted table">
                 <tr>
                     <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td></td>
-                    <td>
-                        <div>
+                        <div class="text-right">
                             <span ng-show="quantity"><b>Subtotal: ({{ quantity }} Item<span ng-if="quantity">s</span>)</b> {{ subtotal | currency }}</span>
                         </div>
                     </td>
