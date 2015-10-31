@@ -21,5 +21,8 @@ app.controller('CheckoutCtrl', function($scope, ShoppingCartService, $http) {
                         return response;
                     });
             })
+            .then(function(res) {
+                ShoppingCartService.clearCart();
+            });
     }
 });

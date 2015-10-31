@@ -41,7 +41,8 @@ router.post('/', function(req, res){
 		if (err) {
 			return res.status('500').send("Error creating order: "+err);
 		}
-		res.status('200').json(newOrder); // this is not returning the new order as expected. It looks like what's being returned is a promise?
+		res.redirect("/");
+		// res.status('200').json(newOrder); // this is not returning the new order as expected. It looks like what's being returned is a promise?
 	});
 });
 

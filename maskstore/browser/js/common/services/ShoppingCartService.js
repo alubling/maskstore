@@ -61,8 +61,6 @@ app.service('ShoppingCartService', function(localStorageService, CartFactory, Au
 
     // saves cart into localStorage
     shoppingCartService.saveCart = function(cart) {
-        console.log(cart);
-        console.log(cart.userId)
         if (AuthService.isAuthenticated()) {
             return $http.put('/api/users/' + cart.userId + '/cart', cart)
                 .then(function(res) {
@@ -80,6 +78,6 @@ app.service('ShoppingCartService', function(localStorageService, CartFactory, Au
 
     // saves cart into localStorage
     shoppingCartService.clearCart = function() {
-        return localStorageService.clearAll();
+        localStorageService.clearAll();
     }
 });
