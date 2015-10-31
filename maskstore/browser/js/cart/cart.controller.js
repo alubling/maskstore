@@ -1,9 +1,11 @@
 app.controller('CartCtrl', function($scope, ShoppingCartService) {
     var reloadCart = function(cart) {
-        $scope.masks = cart.getMasks();
-        $scope.subtotal = cart.getSubtotal();
-        $scope.quantity = cart.getQuantity();
-        $scope.cart = cart;
+        if (cart) {
+            $scope.masks = cart.getMasks();
+            $scope.subtotal = cart.subtotal;
+            $scope.quantity = cart.quantity;
+            $scope.cart = cart;
+        }
     }
 
     ShoppingCartService.getCart()
@@ -15,19 +17,31 @@ app.controller('CartCtrl', function($scope, ShoppingCartService) {
         ShoppingCartService.getCart()
             .then(function(cart) {
                 cart.remove(mask);
-                return reloadCart(cart);
-            });
+                ShoppingCartService.saveCart(cart)
+                    .then(function(cart) {
+                        reloadCart(cart);
+                    })
+            })
     };
 
     $scope.addMask = function(mask) {
         ShoppingCartService.getCart()
             .then(function(cart) {
                 cart.add(mask);
-                reloadCart(cart);
+                ShoppingCartService.saveCart(cart)
+                    .then(function(cart) {
+                        reloadCart(cart);
+                    })
             });
     };
 
-    $scope.$watch('cart', function() {
-        ShoppingCartService.saveCart($scope.cart);
-    }, true);
+    $scope.updateMask = function() {
+        ShoppingCartService.saveCart($scope.cart)
+            .then(function(cart) {
+                reloadCart(cart);
+            })
+    };
+
+    $scope.$watch('cart', function() {}, true);
+
 });

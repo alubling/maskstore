@@ -46,7 +46,7 @@ router.put('/:userId', function(req, res) {
 	})
 });
 
-// delete a user by userId
+// delete a user by userId. THIS ROUTE SHOULD ONLY BE ACCESSIBLE FOR THE USER THEMSELVES -- THEY SHOULD NOT BE ABLE TO DELETE OTHER ACCOUNTS.
 router.delete('/:userId', function(req, res) {
 	Users.findOne({_id: req.params.userId}).then(function(user){
 		console.log('Deleting user: '+user);
@@ -82,6 +82,23 @@ router.put('/:userId/cart', function(req, res){
 		.then(function(user){
 			res.json(user.cart);
 		});
+});
+
+
+//ADMIN ROUTES -- PUT INTO A SEPARATE ROUTER AND SECURE
+router.put('/:userId/passwordReset', function(req, res){
+	Users.findOne({_id: req.params.userId}).then(function(user){
+		user.password.reset = true;
+		res.json(user);
+	});
+});
+
+router.put('/:userId/admin', function(req, res){
+	Users.findOne({_id: req.params.userId}).then(function(user){
+		user.toggleAdmin();
+		user.save();
+		res.json(user);
+	});
 });
 
 module.exports = router;

@@ -44,8 +44,20 @@ var MaskSchema = new mongoose.Schema({
         type: Currency,
         default: 0,
         min: 0
+    },
+    quantity: {
+        type: Number,
+        min: 0
     }
 });
+
+MaskSchema.methods.updateInventory = function(amt){
+    return this.inventory += amt;
+}
+
+MaskSchema.methods.updateCategory = function(cat){
+    return this.category = cat.toLowerCase();
+}
 
 mongoose.model('Mask', MaskSchema);
 

@@ -26,7 +26,8 @@ var User = new mongoose.Schema({
         validate: [validator.isEmail, 'invalid email']
     },
     password: {
-        type: String
+        type: String,
+        reset: Boolean
     },
     salt: {
         type: String
@@ -38,10 +39,15 @@ var User = new mongoose.Schema({
         tokenSecret: String
     },
     facebook: {
-        id: String
+        id: String,
+        username: String,
+        token: String
     },
     google: {
-        id: String
+        id: String,
+        name: String,
+        email: String,
+        token: String
     },
     isAdmin: {
         type: Boolean,
@@ -67,6 +73,12 @@ var User = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }
+    },
+    quantity: {
+        type: Number
+    },
+    subtotal: {
+        type: Number
     }
 });
 
@@ -86,6 +98,10 @@ User.statics.encryptPassword = function(plainText, salt) {
 User.methods.authenticate = function(attempt) {
     return this.password === this.constructor.encryptPassword(attempt, this.salt);
 };
+
+User.methods.toggleAdmin = function(){
+    return this.isAdmin = !this.isAdmin;
+}
 
 User.pre('save', function(next) {
     if (this.isModified('password')) {

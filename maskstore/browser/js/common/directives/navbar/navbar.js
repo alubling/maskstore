@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, ShoppingCartService) {
 
     return {
         restrict: 'E',
@@ -9,9 +9,6 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
             scope.items = [
                 { label: 'Home', state: 'home' },
                 { label: 'Shop', state: 'products' },
-                { label: 'About', state: 'about'},
-                { label: 'Members Only', state: 'membersOnly', auth: true },
-                { label: 'Admin', state: 'admin', auth: true},
             ];
 
             scope.user = null;
@@ -22,6 +19,9 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
             scope.logout = function () {
                 AuthService.logout().then(function () {
+                   // save and clear cart
+                   ShoppingCartService.saveCart();
+                   ShoppingCartService.clearCart();
                    $state.go('home');
                 });
             };

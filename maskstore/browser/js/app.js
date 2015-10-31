@@ -6,6 +6,10 @@ app.config(function ($urlRouterProvider, $locationProvider) {
     $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
     $urlRouterProvider.otherwise('/');
+    // For oAuth, instead of redirecting to the home page, instead reload the window.
+    $urlRouterProvider.when('/auth/:provider', function () {
+    window.location.reload();
+});
 });
 
 app.config(['localStorageServiceProvider', function(localStorageServiceProvider){
