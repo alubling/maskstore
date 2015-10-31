@@ -1,11 +1,11 @@
 {
-  "name": "FullstackGeneratedApp",
+  "name": "Maskstore",
   "version": "1.0.0",
-  "description": "A generated project at Fullstack Academy",
+  "description": "A stackstore implementation by Bryce, Peter, and Amit",
   "main": "server/start.js",
   "scripts": {
     "start": "nodemon --watch server -e js,html server/start.js",
-    "postinstall": "gulp build"
+    "postinstall": "bower install && gulp build"
   },
   "dependencies": {
     "angular": "^1.4.0",
