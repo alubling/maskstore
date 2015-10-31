@@ -35,6 +35,13 @@ app.controller('CartCtrl', function($scope, ShoppingCartService) {
             });
     };
 
+    $scope.updateMask = function() {
+        ShoppingCartService.saveCart($scope.cart)
+            .then(function(cart) {
+                reloadCart(cart);
+            })
+    };
+
     $scope.$watch('cart', function() {}, true);
 
 });
