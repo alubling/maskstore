@@ -47,6 +47,14 @@ var MaskSchema = new mongoose.Schema({
     }
 });
 
+MaskSchema.methods.updateInventory = function(amt){
+    return this.inventory += amt;
+}
+
+MaskSchema.methods.updateCategory = function(cat){
+    return this.category = cat.toLowerCase();
+}
+
 mongoose.model('Mask', MaskSchema);
 
 module.exports = mongoose.model('Mask', MaskSchema);

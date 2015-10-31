@@ -13,7 +13,7 @@ router.get('/', function(req, res) {
     }
 
     MasksModel.find(modelParams).then(function(masks){
-    	res.status('200').json(masks);
+    	res.json(masks);
     })
     .catch(function(err){
     	console.log('Error getting all masks: '+err);
@@ -24,20 +24,22 @@ router.get('/', function(req, res) {
 // get one mask for its detail page
 router.get('/:maskId', function (req, res) {
 	MasksModel.findById(req.params.maskId).then(function(mask){
-		res.status('200').json(mask);
-	})
-	.catch(function(err){
+		res.json(mask);
+	}, function(err){
 		console.log('Error finding mask: '+err);
-	})
+	});
 });
 
 //create a mask
 router.post('/', function (req, res){
+	req.body.category = req.body.category.toLowerCase();
+	req.body.style = req.body.style.toLowerCase();
 	new MasksModel(req.body).save(function(err, newMask){
 		if (err) {
-			return res.status('500').send("Error creating mask: "+err);
+			console.log(err);
+			return res.status(500).send("Error creating mask: "+err);
 		}
-		res.status('200').json(newMask);
+		res.json(newMask);
 	});
 });
 
@@ -48,10 +50,32 @@ router.put('/:maskId', function (req, res){
 		{$set: maskUpdates},
 		{new: true})
 	.then(function(updatedMask){
-		res.status('200').json(updatedMask);
-	})
-	.catch(function(err){
-		res.status('500').send("Error posting mask: "+err);
+		res.status(200).json(updatedMask);
+	}, function(err){
+		res.status(500).send("Error posting mask: "+err);
+	});
+});
+//update a mask inventory
+router.put('/:maskId/inv', function (req, res){
+	var amt = parseInt(req.body.amt);
+	MasksModel.findOne({_id: req.params.maskId}).then(function(mask){
+		mask.updateInventory(amt);
+		mask.save();
+		res.json(mask);
+	}, function(err){
+		res.status(500).send("Error posting mask: "+err);
+	});
+});
+
+//update a mask category
+router.put('/:maskId/cat', function (req, res){
+	var cat = req.body.category
+	MasksModel.findOne({_id: req.params.maskId}).then(function(mask){
+		mask.updateCategory(cat);
+		mask.save();
+		res.json(mask);
+	}, function(err){
+		res.status(500).send("Error posting mask: "+err);
 	});
 });
 
@@ -61,8 +85,7 @@ router.delete('/:maskId', function (req, res){
 		console.log('Removing Mask: '+mask.title);
 		mask.remove();
 		res.status('200').send('Successfully removed the mask.');
-	})
-	.catch(function(err){
+	}, function(err){
 		console.log('Error removing mask: '+err);
 	});
 });
