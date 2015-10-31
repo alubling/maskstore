@@ -73,6 +73,12 @@ var User = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
         }
+    },
+    quantity: {
+        type: Number
+    },
+    subtotal: {
+        type: Number
     }
 });
 

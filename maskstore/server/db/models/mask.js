@@ -44,6 +44,10 @@ var MaskSchema = new mongoose.Schema({
         type: Currency,
         default: 0,
         min: 0
+    },
+    quantity: {
+        type: Number,
+        min: 0
     }
 });
 
