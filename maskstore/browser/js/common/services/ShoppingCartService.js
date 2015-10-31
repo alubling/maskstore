@@ -29,12 +29,16 @@ app.service('ShoppingCartService', function(localStorageService, CartFactory, Au
 
     // saves cart into localStorage
     shoppingCartService.saveCart = function(cart) {
+        console.log(cart);
+        console.log(cart.userId)
         if (AuthService.isAuthenticated()) {
             return $http.put('/api/users/'+cart.userId+'/cart', cart)
                 .then(function(res) {
                     console.log('we made it! added to cart and saved. check out the updated cart:');
                     console.log(res.data);
                     return res.data;
+                }, function(err){
+                    console.log(err);
                 });
         } else {
             localStorageService.set(LOCAL_STORAGE_KEY, cart);
