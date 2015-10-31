@@ -1,0 +1,39 @@
+<div class="ui basic segment">
+  <h2>Subtotal: {{order[0].totalPrice / 100 | currency}}</h2>
+</div>
+
+<div class="ui divider"></div>
+
+  <div ui-view class="ui three column grid">
+    <div ng-repeat='mask in masks' class="ui special cards column" account-detail>
+      <div class="card">
+        <div class="blurring dimmable image">
+          <div class="ui dimmer">
+            <div class="content">
+              <div class="center">
+                <div class="ui inverted button"><a ui-sref="productsDetail({id: mask.mask._id})">View Detail</a></div>
+              </div>
+            </div>
+          </div>
+          <img ng-src="{{mask.mask.image}}">
+        </div>
+        <div class="content">
+          <a class="header">{{mask.title}}</a>
+        </div>
+        <div class="extra content">
+          <div class="meta">
+            Price: <span class="date">{{order[0].masks[$index].price}}</span>
+          </div>
+        </div>
+        <div class="extra content">
+          <a>Quantity:
+            {{order[0].masks[$index].quantity}}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- {{masks}} -->
+<!-- {{order[0].masks[0].mask}} -->
+<!-- <pre>{{order | json}}</pre> -->
