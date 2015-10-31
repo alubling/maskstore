@@ -3,7 +3,7 @@ var router = require('express').Router();
 var Reviews = require('../../db/models/review');
 
 //Get All Reviews: GET /reviews
-router.get('/', function(req, res, next){
+router.get('/', function(req, res){
 		Reviews.find({})
 			.then(function(reviews){
 			res.status('200').json(reviews);
@@ -13,7 +13,7 @@ router.get('/', function(req, res, next){
 		});
 	});
 //Get One Review: GET /reviews/:reviewID
-router.get('/:reviewId', function(req, res, next){
+router.get('/:reviewId', function(req, res){
 	Reviews.find({_id: req.params.reviewId}).then(function(review){
 		res.status('200').json(review);
 	})
@@ -23,8 +23,10 @@ router.get('/:reviewId', function(req, res, next){
 });
 
 //Get All Reviews for a particular mask: GET /reviews/mask/:maskId
-router.get('/mask/:maskId', function(req, res, next){
-	Reviews.find({mask: req.params.maskId}).then(function(reviews){
+router.get('/mask/:maskId', function(req, res){
+	Reviews.find({mask: req.params.maskId})
+	.populate('user') // this populates the data from the user reference, since user is an id of a user but we need 
+	.then(function(reviews){
 		res.status('200').json(reviews);
 	})
 	.catch(function(err){
@@ -33,7 +35,7 @@ router.get('/mask/:maskId', function(req, res, next){
 });
 
 //Get All Reviews for a particular user: GET /reviews/user/:userId
-router.get('/user/:userId', function(req, res, next){
+router.get('/user/:userId', function(req, res){
 	Reviews.find({user: req.params.userId}).then(function(reviews){
 		res.status('200').json(reviews);
 	})
@@ -43,19 +45,19 @@ router.get('/user/:userId', function(req, res, next){
 });
 
 //Create Review: POST /reviews
-router.post('/', function(req, res, next){
-	var review = new Reviews(req.body).save(function(err){
+router.post('/', function(req, res){
+	new Reviews(req.body).save(function(err, review){
 		if (err) return res.status('500').send("Error creating review: "+err);
 		res.status('200').json(review);
 	})
 });
 
 //Update Review: PUT /reviews/:reviewId
-router.put('/:reviewId', function(req, res, next){
+router.put('/:reviewId', function(req, res){
 	var reviewUpdates = req.body;
 
 	Reviews.findOneAndUpdate({_id: req.params.reviewId},
-		{$set: reviewUpdates}, 
+		{$set: reviewUpdates},
 		{new: true})
 	.then(function(updatedReview){
 		res.status('200').json(updatedReview);
@@ -66,7 +68,7 @@ router.put('/:reviewId', function(req, res, next){
 });
 
 //Delete Review: DELETE /reviews/:maskId
-router.delete('/:maskId', function(req, res, next){
+router.delete('/:maskId', function(req, res){
 	Reviews.findOne({_id: req.params.maskId}).then(function(review){
 		console.log('Deleting review: '+review);
 		review.remove();

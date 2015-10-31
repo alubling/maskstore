@@ -1,0 +1,59 @@
+<div class="ui inverted form" name="maskForm" ng-submit="maskForm.$valid">
+
+	<h2>Create a new mask in inventory:</h2>
+	<div class="ui required small inline field input focus">
+	  <label for="Title">Title:</label>
+	  <input for="Title" type="text" ng-model="newMask.title" placeholder="Mask name">
+	</div>
+	</br>
+	<div class="ui required inline field input focus">
+	  <label for="Description">Description:</label>
+	  <textarea for="Description" type="text" ng-model="newMask.description" placeholder="Mask description" rows="2"></textarea> 
+	</div>
+	</br>
+	<div class="ui small inline field input focus">
+	  <label for="Inventory">Inventory:</label>
+	  <input for="Inventory" type="text" ng-model="newMask.inventory" placeholder="Mask inventory">
+	</div>
+	</br>
+	<div class="ui small inline field input focus">
+	  <label for="Image">Image URL:</label>
+	  <input for="Image" type="text" ng-model="newMask.image" placeholder="Image URL">
+	</div>
+	</br>
+	<div class="ui small inline field input focus">
+	  <label for="Color">Color:</label>
+	  <input for="Color" type="text" ng-model="newMask.color" placeholder="Mask Color">
+	</div>
+	</br>
+	<div class="ui required small inline field input focus">
+	  <label for="Price">Price ($):</label>
+	  <input for="Price" type="text" ng-model="newMask.price" placeholder="Price in USD (ex: '29.95')">
+	</div>
+	</br>
+	<div class="required field">
+	    <label>Choose a style:</label>
+	    <select class="ui dropdown" ng-model="newMask.style">
+	      <option value="">Style</option>
+	      <option ng-repeat="style in styles" value="{{style.name}}">{{style.name}}</option>
+	    </select>
+	</div>
+	<div class="required field">
+	    <label>Choose a category:</label>
+	    <select class="ui dropdown" ng-model="newMask.category">
+	      <option value="">Category</option>
+		  <option ng-repeat="category in categories" value="{{category.name}}">{{category.name}}</option>
+ 	    </select>
+	</div>
+<div class="ui submit button blue" ng-click="createMask(newMask)">Submit</div>
+
+<h2>Add a new category to the list:</h2>
+<h3>Categories:</h3>
+<div class="ui celled list">
+<div class="item" ng-repeat="category in categories">{{category.name}}</div>
+<label for="new-category">New Category:</label>
+<input for="new-category" type="text" placeholder="category name" ng-model="newCategory"></input>
+<div class="ui submit button blue right attached" ng-click="addNewCategory()">Submit</div>
+
+
+

@@ -3,7 +3,7 @@ var router = require('express').Router();
 var Orders = require('../../db/models/order');
 
 //Get all orders period.
-router.get('/', function(req, res, next){
+router.get('/', function(req, res){
 	Orders.find({})
 		.then(function(orders){
 		res.status('200').json(orders);
@@ -13,8 +13,8 @@ router.get('/', function(req, res, next){
 	})
 });
 
-//Get all orders for a user: GET /orders. Is this the right way to find the referring user?
-router.get('/user/:userId', function(req, res, next){
+//Get all orders for a user: GET /orders.
+router.get('/user/:userId', function(req, res){
 	Orders.find({user: req.params.userId}).then(function(orders){
 		res.status('200').json(orders);
 	})
@@ -24,8 +24,10 @@ router.get('/user/:userId', function(req, res, next){
 });
 
 //get one order (just in case we need this)
-router.get('/:orderId', function(req, res, next){
-	Orders.find({_id: req.params.orderId}).then(function(order){
+router.get('/:orderId', function(req, res){
+	Orders.find({_id: req.params.orderId}) // this should be findOne but who cares for now
+	.populate('masks.mask') // need to grab the masks here rather than just having the ids
+	.then(function(order){
 		res.status('200').json(order);
 	})
 	.catch(function(err){
@@ -34,8 +36,8 @@ router.get('/:orderId', function(req, res, next){
 });
 
 //Create a new order: POST /orders
-router.post('/', function(req, res, next){
-	var newOrder = new Orders(req.body).save(function(err){
+router.post('/', function(req, res){
+	new Orders(req.body).save(function(err, newOrder){
 		if (err) {
 			return res.status('500').send("Error creating order: "+err);
 		}
@@ -44,9 +46,9 @@ router.post('/', function(req, res, next){
 });
 
 //Update order: PUT /orders/:OrderId
-router.put('/:orderId', function(req, res, next){
+router.put('/:orderId', function(req, res){
 	var orderUpdates = req.body;
-	Orders.findOneAndUpdate({_id: req.params.orderId}, 
+	Orders.findOneAndUpdate({_id: req.params.orderId},
 		{$set: orderUpdates},
 		{new: true})
 	.then(function(updatedOrder){
@@ -57,8 +59,11 @@ router.put('/:orderId', function(req, res, next){
 	});
 });
 
+
+//ADMIN ROUTES
+
 //Delete order: DELETE /orders/:OrderId
-router.delete('/:orderId', function(req, res, next){
+router.delete('/:orderId', function(req, res){
 	Orders.findOne({_id: req.params.orderId}).then(function(order){
 		console.log('Deleting Order: '+order+' \nfor user: '+order.user||'guest');
 		order.remove();
@@ -68,6 +73,21 @@ router.delete('/:orderId', function(req, res, next){
 		console.log('Error removing order: '+err);
 	});
 });
+
+//Change status of an order
+router.put('/:orderId/statusUpdate', function(req, res){
+	var statusUpdate = req.body.status;
+	Orders.findOneAndUpdate({_id: req.params.orderId}, 
+		{$set: {status: statusUpdate}},
+		{new: true})
+	.then(function(updatedOrder){
+		res.status(200).json(updatedOrder);
+	}, function(err){
+		res.status(406).send('There was an error setting the order status: '+err);
+	});
+});
+
+
 
 // Make sure this is after all of
 // the registered routes!

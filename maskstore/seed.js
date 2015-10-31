@@ -53,7 +53,13 @@ function getRandomUsers(num) {
                 phone: chance.phone(),
                 email: chance.email(),
                 password: 'password', // default password so we can login
-                isAdmin: chance.weighted([true, false], [5, 95])
+                isAdmin: chance.weighted([true, false], [5, 95]),
+                cart: {
+                    masks: [],
+                    userid: null,
+                    subtotal: 0,
+                    quantity: 0
+                }
             }));
     };
 
@@ -86,10 +92,10 @@ function getRandomMasks(num) {
                     min: 0,
                     max: colors.length - 1
                 }),
-                category: categories[chance.natural({
+                category: [categories[chance.natural({
                     min: 0,
                     max: categories.length - 1
-                })],
+                })]],
                 price: chance.dollar()
             }));
     };
@@ -149,7 +155,8 @@ mongoose.connection.on('open', function() {
                         quantity: 3
                     }],
                     totalPrice: '$59.95',
-                    user: userModels[0]
+                    user: userModels[0],
+                    status: 'completed'
                 }];
 
                 return Order.createAsync(orders);

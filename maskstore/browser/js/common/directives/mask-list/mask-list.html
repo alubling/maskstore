@@ -1,0 +1,25 @@
+<br>
+{{maskCat}}
+<h2> Inventory List: </h2>
+<div class="ui celled list">
+  <div class="item" ng-repeat="mask in masks">
+  	<img src="mask.image">
+  		<div class="Content">
+  			<!-- <a ui-sref="productsDetail({id: mask._id})"> --><div class="Header">{{mask.title}}</div><!-- </a> -->
+  			Inventory: {{mask.inventory}} || Categories: {{ mask.category}} || Style: {{mask.style}} || Color: {{mask.color}} || Price: {{mask.price}}
+  		</div>
+  	<div class="ui action input">
+  	<input type="text" class="" placeholder="Adjust Inventory Amt" ng-model="amt"></input>
+  	<div type="submit" class="mini positive ui button" ng-click="addInventory(mask._id, amt)"><i class="plus icon"></i></div>
+  	<div type="submit" class="mini negative ui button" ng-click="subtractInventory(mask._id, amt)"><i class="minus icon"></i></div>
+  	</div>
+    <select class="ui dropdown" ng-model="maskCat">
+      <option value="">Add/Remove Category</option>
+	  <option ng-repeat="category in categories" value="{{category.name}}">{{category.name}}</option>
+	</select>
+	<div type="submit" class="mini positive ui button" ng-click="updateCategory(mask._id, maskCat, true)"><i class="plus icon"></i></div>
+    <div type="submit" class="mini negative ui button" ng-click="updateCategory(mask._id, maskCat, false)"><i class="minus icon"></i></div>
+    </div>
+	</div>
+  </div>
+</div>

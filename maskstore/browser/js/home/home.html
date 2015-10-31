@@ -1,5 +1,213 @@
-<section id="home">
+<!-- <section id="home">
     <fullstack-logo></fullstack-logo>
     <rando-greeting></rando-greeting>
-    <pre>{{masks | json}}</pre>
-</section>
+    <h1>Welcome to Maskstore</h1>
+    <h3>for all your ski masks needs</h3>
+
+        <carousel>
+            <slide ng-repeat="image in images">
+                <img height="300" ng-src="{{ image }}" />
+            </slide>
+        </carousel>
+
+</section> -->
+
+<style type="text/css">
+    @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,900);
+
+    body {
+      background:
+        linear-gradient(
+          rgba(0, 0, 0, 0.5),
+          rgba(0, 0, 0, 0.5)
+        ),
+        url(http://hisheavenlyarmies.com/wp-content/uploads/2014/07/0011ski-mask-society.jpg);
+      background-size: cover;
+      background-repeat: no-repeat;
+      /*font-family: 'Source Sans Pro', sans-serif;*/
+    }
+
+    header {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      color: white;
+    }
+    h1 {
+      text-transform: uppercase;
+      margin: 0;
+      font-size: 3rem;
+      white-space: nowrap;
+    }
+    p {
+      margin: 0;
+      font-size: 1.5rem;
+    }
+    .pusher{
+      padding-top: 700px;
+    }
+    .hidden.menu {
+      display: none;
+    }
+
+    .masthead.segment {
+      min-height: 700px;
+      padding: 1em 0em;
+    }
+    .masthead .logo.item img {
+      margin-right: 1em;
+    }
+    .masthead .ui.menu .ui.button {
+      margin-left: 0.5em;
+    }
+    .masthead h1.ui.header {
+      margin-top: 3em;
+      margin-bottom: 0em;
+      font-size: 4em;
+      font-weight: normal;
+    }
+    .masthead h2 {
+      font-size: 1.7em;
+      font-weight: normal;
+    }
+
+    .ui.vertical.stripe {
+      padding: 8em 0em;
+    }
+    .ui.vertical.stripe h3 {
+      font-size: 2em;
+    }
+    .ui.vertical.stripe .button + h3,
+    .ui.vertical.stripe p + h3 {
+      margin-top: 3em;
+    }
+    .ui.vertical.stripe .floated.image {
+      clear: both;
+    }
+    .ui.vertical.stripe p {
+      font-size: 1.33em;
+    }
+    .ui.vertical.stripe .horizontal.divider {
+      margin: 3em 0em;
+    }
+
+    .quote.stripe.segment {
+      padding: 0em;
+    }
+    .quote.stripe.segment .grid .column {
+      padding-top: 5em;
+      padding-bottom: 5em;
+    }
+
+    .footer.segment {
+      padding: 5em 0em;
+      width: 100%;
+    }
+
+    .secondary.pointing.menu .toc.item {
+      display: none;
+    }
+
+    @media only screen and (max-width: 700px) {
+      .ui.fixed.menu {
+        display: none !important;
+      }
+      .secondary.pointing.menu .item,
+      .secondary.pointing.menu .menu {
+        display: none;
+      }
+      .secondary.pointing.menu .toc.item {
+        display: block;
+      }
+      .masthead.segment {
+        min-height: 350px;
+      }
+      .masthead h1.ui.header {
+        font-size: 2em;
+        margin-top: 1.5em;
+      }
+      .masthead h2 {
+        margin-top: 0.5em;
+        font-size: 1.5em;
+      }
+    }
+  </style>
+
+<header>
+  <div class="ui text container">
+        <h1 class="ui inverted header">
+          MaskStore
+        </h1>
+        <h2>For all your ski mask needs.</h2>
+      <a ui-sref="products"><div class="ui huge primary button">Get a Mask <i class="right arrow icon"></i></div></a>
+  </div>
+</header>
+
+<div class="pusher">
+  <div class="ui vertical stripe segment">
+    <div class="ui middle aligned stackable grid container">
+      <div class="row">
+        <div class="eight wide column">
+          <h3 class="ui header">Need a ski mask? We're here to help.</h3>
+          <p>Whether you're into armed robbery, handling liquid nitrogen, or just going skiing, MaskStore has you covered.</p>
+          <h3 class="ui header">Styles, Categories, Colors</h3>
+          <p>Choose from our wide selection of Masks that promise to leave your partner feeling satisfied and your friends shocked and awed.</p>
+        </div>
+        <div class="six wide right floated column">
+          <img ng-src="http://f0.bcbits.com/img/a1633488177_10.jpg" class="ui large bordered rounded image">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui vertical stripe quote segment">
+    <div class="ui equal width stackable internally celled grid">
+      <div class="center aligned row">
+        <div class="column">
+          <h3>"What a Company!"</h3>
+          <p>Pretty much every review of us</p>
+        </div>
+        <div class="column">
+          <h3>"I shouldn't have gone with their competitor."</h3>
+          <p>
+            <img src="https://encrypted-tbn1.gstatic.com/images?q=tbn:ANd9GcRqYE7Jd4a-SG97hnLxOdNID-Xni3E-Qgo-OzQZ8nK4fL50XXEy" class="ui avatar image"> <b>Stuart</b> Meth Dealer
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="ui inverted vertical footer segment">
+    <div class="ui container">
+      <div class="ui stackable inverted divided equal height stackable grid">
+        <div class="three wide column">
+          <h4 class="ui inverted header">About</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Sitemap</a>
+            <a href="#" class="item">Contact Us</a>
+            <a href="#" class="item">Religious Ceremonies</a>
+            <a href="#" class="item">Gazebo Plans</a>
+          </div>
+        </div>
+        <div class="three wide column">
+          <h4 class="ui inverted header">Services</h4>
+          <div class="ui inverted link list">
+            <a href="#" class="item">Banana Pre-Order</a>
+            <a href="#" class="item">DNA FAQ</a>
+            <a href="#" class="item">How To Access</a>
+            <a href="#" class="item">Favorite X-Men</a>
+          </div>
+        </div>
+        <div class="seven wide column">
+          <h4 class="ui inverted header">Maskstore is now Hiring!</h4>
+          <p>Have a special place in your heart for masks? We hire folks with all types of experience and don't check 
+          your criminal history. 
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+

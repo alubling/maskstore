@@ -48,13 +48,13 @@
         ]);
     });
 
-    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q) {
+    app.service('AuthService', function ($http, Session, $rootScope, AUTH_EVENTS, $q, $state) {
 
         function onSuccessfulLogin(response) {
             var data = response.data;
-            Session.create(data.id, data.user);
+            Session.create(data._id, data);
             $rootScope.$broadcast(AUTH_EVENTS.loginSuccess);
-            return data.user;
+            return data;
         }
 
         // Uses the session factory to see if an
@@ -88,6 +88,9 @@
 
         this.login = function (credentials) {
             return $http.post('/login', credentials)
+                .then(function(response){
+                    return response;
+                })
                 .then(onSuccessfulLogin)
                 .catch(function () {
                     return $q.reject({ message: 'Invalid login credentials.' });
@@ -101,6 +104,13 @@
             });
         };
 
+        this.signup = function (signupInfo) {
+            return $http.post('/api/auth/signup', signupInfo)
+            .then(onSuccessfulLogin)
+            .catch(function (){
+                return $q.reject({ message: 'Error occurred during sign up.'});
+            });
+        };
     });
 
     app.service('Session', function ($rootScope, AUTH_EVENTS) {

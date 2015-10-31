@@ -1,12 +1,20 @@
 'use strict';
-window.app = angular.module('FullstackGeneratedApp', ['ui.router', 'ui.bootstrap', 'fsaPreBuilt']);
+window.app = angular.module('FullstackGeneratedApp', ['ui.router', 'ui.bootstrap', 'fsaPreBuilt', 'LocalStorageModule']);
 
 app.config(function ($urlRouterProvider, $locationProvider) {
     // This turns off hashbang urls (/#about) and changes it to something normal (/about)
     $locationProvider.html5Mode(true);
     // If we go to a URL that ui-router doesn't have registered, go to the "/" url.
     $urlRouterProvider.otherwise('/');
+    // For oAuth, instead of redirecting to the home page, instead reload the window.
+    $urlRouterProvider.when('/auth/:provider', function () {
+    window.location.reload();
 });
+});
+
+app.config(['localStorageServiceProvider', function(localStorageServiceProvider){
+    localStorageServiceProvider.setPrefix('ls');
+}]);
 
 // This app.run is for controlling access to specific states.
 app.run(function ($rootScope, AuthService, $state) {

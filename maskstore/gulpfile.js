@@ -49,6 +49,8 @@ gulp.task('buildJS', ['lintJS'], function () {
         .pipe(gulp.dest('./public'));
 });
 
+
+
 gulp.task('testServerJS', function () {
     require('babel/register');
 	return gulp.src('./tests/server/**/*.js', {

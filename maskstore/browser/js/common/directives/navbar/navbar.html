@@ -1,17 +1,62 @@
-<nav class="navbar navbar-static-top">
-    <div class="container">
-        <div class="navbar-header">
-            <fullstack-logo></fullstack-logo>
+<div class="ui inverted vertical center aligned segment">
+  <div class="ui container">
+    <div class="ui large secondary inverted pointing menu">
+      <a ng-repeat="item in items" class="item" ui-sref-active="active" ui-sref="{{item.state}}">{{item.label}}</a>
+      <div class="right item">
+        <a class="item" ui-sref="cart"><i class="shop icon"></i></a>
+        <div ng-show="!user" class="guest">
+          <a class="ui inverted button" ui-sref="login">Log in</a>
+          <a class="ui inverted button" ui-sref="signup">Sign Up</a>
         </div>
-        <ul class="nav navbar-nav">
-            <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
-                <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
-            </li>
-        </ul>
-        <button ng-show="!user" ui-sref="login" class="btn login-button">Login</button>
-        <div ng-show="user" class="welcome">
-            <span>Welcome, {{ user.email }}!</span>
-            <a ng-click="logout()">Logout</a>
-        </div>
+          <a ng-show="user" class="item" ui-sref="account">My Account</a>
+          <a ng-show="user" class= "ui inverted button" ng-click="logout()">Logout</a>
+      </div>
     </div>
-</nav>
+  </div>
+</div>
+
+
+
+<!-- <div class="ui-container">
+    <div class="ui large secondary inverted pointing menu">
+        <maskstore-logo></maskstore-logo>
+    </div>
+    <ul class="ui fluid container">
+        <li ng-repeat="item in items" ng-show="!item.auth || isLoggedIn()">
+            <a ui-sref-active="active" ui-sref="{{ item.state }}">{{ item.label }}</a>
+        </li>
+    </ul>
+    <button ng-show="!user" ui-sref="login" class="ui inverted button">Login</button>
+    <button ng-show="!user" ui-sref="login" class="ui inverted button">Sign Up</button>
+
+</div>
+ -->
+
+
+<!-- Following Menu -->
+<!-- <div class="ui large top fixed hidden menu">
+  <div class="ui container">
+    <a class="active item">Home</a>
+    <a class="item">Work</a>
+    <a class="item">Company</a>
+    <a class="item">Careers</a>
+    <div class="right menu">
+      <div class="item">
+        <a class="ui button">Log in</a>
+      </div>
+      <div class="item">
+        <a class="ui primary button">Sign Up</a>
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<!-- Sidebar Menu -->
+<!-- <div class="ui vertical inverted sidebar menu">
+  <a class="active item">Home</a>
+  <a class="item">Work</a>
+  <a class="item">Company</a>
+  <a class="item">Careers</a>
+  <a class="item">Login</a>
+  <a class="item">Signup</a>
+</div> -->

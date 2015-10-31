@@ -1,0 +1,190 @@
+<!-- <img ng-src="{{mask.image}}">
+{{mask.title}}
+{{mask.price}} -->
+
+<!-- use this to see where the containers are: style="border: solid black 1px;" -->
+
+<div class="ui two column centered grid">
+
+  <div class="three column centered row">
+
+    <div class='column'>
+      <div class="ui special cards" mask>
+        <div class="card">
+          <div class="blurring dimmable image">
+            <div class="ui dimmer">
+              <div class="content">
+                <div class="center">
+                  <div class="ui inverted button" ng-click="addToCart(mask)">Add to Cart</div>
+                </div>
+              </div>
+            </div>
+            <img ng-src="{{mask.image}}">
+          </div>
+          <div class="content">
+            <a class="header">{{mask.title}}</a>
+            <div class="meta">
+              <span class="date">{{mask.price}}</span>
+            </div>
+          </div>
+          <div class="extra content">
+            <a>
+              <i class="tag icon"></i>
+              {{mask.category}}
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class='ui column raised very padded text container basic segment'>
+      <h2 class='ui header'>{{mask.title}}</h2>
+      <p>{{mask.description}}</p>
+    </div>
+
+  </div>
+
+  <div class='three column centered row'>
+
+    <div class="ui three statistics">
+      <div class="yellow statistic ui vertical segment">
+        <div class="value">
+          {{mask.color}}
+        </div>
+        <div class="label">
+          Star Rating
+        </div>
+      </div>
+      <div class="green statistic ui vertical segment">
+        <div class="text value">
+          {{mask.style}}
+        </div>
+        <div class="label">
+          Style
+        </div>
+      </div>
+      <div class="teal statistic ui vertical segment">
+        <div class="value">
+          <!-- <i class="shop icon"></i> -->
+          {{mask.inventory}}
+        </div>
+        <div class="label">
+          Left in Stock
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+</div>
+
+<div class="ui three column grid">
+  <div class="ui column text basic segment">
+    <h2 class='ui header'>Reviews</h2>
+  </div>
+</div>
+<div ui-view class="ui three column grid">
+  <div ng-repeat='review in reviews' class="ui special cards column">
+
+    <div class='ui column raised very padded text container basic segment'>
+      <h2 class='ui header'>{{review.user.firstName}}  <span class="ui large star rating" ng-model="rrating" data-rating="{{review.stars}}"></span></h2>
+      <p>{{review.text}}</p>
+    </div>
+  </div>
+</div>
+
+<div ng-show="loggedIn">
+
+<div class="ui basic segment">
+  <h2 class='ui header'>Leave a Review:</h2>
+</div>
+
+<div class="ui form" id="reviewForm" name="reviewForm" ng-submit="reviewForm.$valid">
+
+  <div class="ui four column grid">
+    <div class='ui column'>
+    	<div class="ui required small inline field input focus">
+    	  <label for="Rating">Rating:</label>
+    	  <input for="Rating" type="number" ng-model="newReview.stars" placeholder="Pick a rating from 1 to 5.">
+    	</div>
+    </div>
+    <div class='ui column'>
+    	<div class="ui required inline field input focus">
+    	  <label for="Description">Description:</label>
+    	  <textarea for="Description" type="text" ng-model="newReview.text" placeholder="Enter your review here." rows="4"></textarea>
+    	</div>
+    </div>
+  </div>
+	</br>
+
+<div class="ui submit button" ng-click="createReview(newReview)">Submit</div>
+
+</div>
+
+
+  <!-- <div class="left floated center aligned seven wide column"> -->
+    <!-- <div class='ui right floated center aligned segment'> -->
+    <!-- <div class="ui three statistics">
+      <div class="yellow statistic ui vertical segment">
+        <div class="value">
+          {{mask.color}}
+        </div>
+        <div class="label">
+          Star Rating
+        </div>
+      </div>
+      <div class="green statistic ui vertical segment">
+        <div class="text value">
+          {{mask.style}}
+        </div>
+        <div class="label">
+          Style
+        </div>
+      </div>
+      <div class="teal statistic ui vertical segment">
+        <div class="value">
+          <i class="shop icon"></i>
+          {{mask.inventory}}
+        </div>
+        <div class="label">
+          Left in Stock
+        </div>
+      </div>
+    </div> -->
+  <!-- </div> -->
+  <!-- </div> -->
+
+
+
+
+<!-- <div class="ui one statistics">
+  <div class="statistic">
+    <div class="value">
+      <img ng-src="{{mask.image}}" class="ui circular inline image">
+      {{mask.category}}
+    </div>
+    <div class="label">
+      Purpose
+    </div>
+  </div>
+</div> -->
+
+<!-- <div class="ui special card">
+  <div class="ui slide masked reveal image">
+    <img ng-src="{{mask.image}}" class="visible content">
+    <img ng-src="http://www.wholesaleforeveryone.com/Merchant2/graphics/00000001/hats/atht9030C0480.jpg" class="hidden content">
+  </div>
+  <div class="content">
+    <a class="header">{{mask.title}}</a>
+    <div class="meta">
+      <span class="date">{{mask.price}}</span>
+    </div>
+  </div>
+  <div class="extra content">
+    <a>
+      <i class="tag icon"></i>
+      {{mask.category}}
+    </a>
+  </div>
+</div> -->
