@@ -1,4 +1,4 @@
-app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) {
+app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state, ShoppingCartService) {
 
     return {
         restrict: 'E',
@@ -22,6 +22,9 @@ app.directive('navbar', function ($rootScope, AuthService, AUTH_EVENTS, $state) 
 
             scope.logout = function () {
                 AuthService.logout().then(function () {
+                   // save and clear cart
+                   ShoppingCartService.saveCart();
+                   ShoppingCartService.clearCart();
                    $state.go('home');
                 });
             };
