@@ -36,7 +36,7 @@ var MaskSchema = new mongoose.Schema({
         required: true
     },
     category: {
-        type: String,
+        type: ['String'],
         enum: ['costume', 'burglary', 'armed robbery', 'meth making', 'handling liquid nitrogen', 'skiing'],
         required: true
     },
@@ -55,8 +55,12 @@ MaskSchema.methods.updateInventory = function(amt){
     return this.inventory += amt;
 }
 
-MaskSchema.methods.updateCategory = function(cat){
-    return this.category = cat.toLowerCase();
+MaskSchema.methods.addCategory = function(cat){
+    return this.category.push(cat);
+}
+
+MaskSchema.methods.removeCategory = function(cat){
+    return this.category.splice(this.category.indexOf(cat), 1);
 }
 
 mongoose.model('Mask', MaskSchema);

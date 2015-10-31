@@ -19,7 +19,7 @@ app.factory('AdminFactory', function($http){
 				console.log('You cannot trigger a password reset for oAuth users.');
 			} //don't let password resets trigger for oAuth users.
 		}).then(function(){
-			return $http.put('/api/users/passwordReset'+userId).then(function(res){
+			return $http.put('/api/users/passwordReset/'+userId).then(function(res){
 				console.log('User '+res.data.firstName+' '+res.data.lastName+' will be prompted to reset their password on next log in.');
 			});
 		});
@@ -51,10 +51,16 @@ app.factory('AdminFactory', function($http){
 		});
 	}
 
-	function updateCategory(id, category){
+	function updateCategory(id, category, add){
 		if (!category || !id) return;
-		console.log('Updating category to '+category);
-		var req = {category: category};
+		if (add){
+			console.log('Adding category: '+category);
+		}
+		else {
+			console.log('Removing category: '+category);
+		}
+		
+		var req = {category: category, add: add};
 		$http.put('/api/masks/'+id+'/cat', req).then(function(res){
 			console.log(res.data);
 		});

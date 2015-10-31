@@ -1,22 +1,25 @@
 <br>
+{{maskCat}}
 <h2> Inventory List: </h2>
 <div class="ui celled list">
   <div class="item" ng-repeat="mask in masks">
   	<img src="mask.image">
   		<div class="Content">
   			<!-- <a ui-sref="productsDetail({id: mask._id})"> --><div class="Header">{{mask.title}}</div><!-- </a> -->
-  			Inventory: {{mask.inventory}} || Category: {{mask.category}} || Style: {{mask.style}} || Color: {{mask.color}} || Price: {{mask.price}}
+  			Inventory: {{mask.inventory}} || Categories: {{ mask.category}} || Style: {{mask.style}} || Color: {{mask.color}} || Price: {{mask.price}}
   		</div>
   	<div class="ui action input">
   	<input type="text" class="" placeholder="Adjust Inventory Amt" ng-model="amt"></input>
-  	<div type="submit" class="small positive ui button right attached" ng-click="addInventory(mask._id, amt)"><i class="plus icon"></i></div>
-  	<div type="submit" class="small negative ui button right attached" ng-click="subtractInventory(mask._id, amt)"><i class="minus icon"></i></div>
+  	<div type="submit" class="mini positive ui button" ng-click="addInventory(mask._id, amt)"><i class="plus icon"></i></div>
+  	<div type="submit" class="mini negative ui button" ng-click="subtractInventory(mask._id, amt)"><i class="minus icon"></i></div>
   	</div>
-    <select class="ui dropdown" ng-model="maskCategory">
-      <option value="">Change Category</option>
+    <select class="ui dropdown" ng-model="maskCat">
+      <option value="">Add/Remove Category</option>
 	  <option ng-repeat="category in categories" value="{{category.name}}">{{category.name}}</option>
 	</select>
-	<div class="ui submit button right attached" ng-click="updateCategory(mask._id, maskCategory)">Update</div>
+	<div type="submit" class="mini positive ui button" ng-click="updateCategory(mask._id, maskCat, true)"><i class="plus icon"></i></div>
+    <div type="submit" class="mini negative ui button" ng-click="updateCategory(mask._id, maskCat, false)"><i class="minus icon"></i></div>
+    </div>
 	</div>
   </div>
 </div>

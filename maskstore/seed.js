@@ -92,10 +92,10 @@ function getRandomMasks(num) {
                     min: 0,
                     max: colors.length - 1
                 }),
-                category: categories[chance.natural({
+                category: [categories[chance.natural({
                     min: 0,
                     max: categories.length - 1
-                })],
+                })]],
                 price: chance.dollar()
             }));
     };
