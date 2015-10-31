@@ -7,7 +7,7 @@ app.config(function($stateProvider) {
     });
 });
 
-app.controller('AuthCtrl', function($scope, $state, AuthService, ShoppingCartService) {
+app.controller('AuthCtrl', function($scope, AuthService, $state, ShoppingCartService) {
     $scope.login = {};
     $scope.signup = {};
     $scope.error = null;
