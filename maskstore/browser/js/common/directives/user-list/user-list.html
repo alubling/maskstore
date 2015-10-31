@@ -1,0 +1,13 @@
+<h2> User List: </h2>
+<div class="ui celled list">
+  <div class="item" ng-repeat="user in users">
+  		<div class="Content">
+  			<!-- <a ui-sref="productsDetail({id: mask._id})"> --><div class="Header">{{user.firstName}}+' '+{{user.lastName}}</div><!-- </a> -->
+  			Email Addess: {{user.email}} || Phone: {{user.phone}} || Admin: {{user.isAdmin}}
+  		</div>
+  	<div class="ui action input">
+  	<div type="submit" class="small ui button" ng-click="changeAdmin(user._id)">Change Admin Status</div>
+  	<div type="submit" class="small ui button" ng-click="resetPassword(user._id)"></div>
+  	</div>
+	   <div type="submit" class="small ui button negative" ng-click="deleteUser(user._id)">DELETE USER</div>
+	</div>

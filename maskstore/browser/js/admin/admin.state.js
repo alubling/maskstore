@@ -14,7 +14,7 @@ app.config(function($stateProvider) {
 				return MasksFactory.getMasks();
 			}
 		},
-		controller: function($scope, masklist, $state, AdminFactory, MasksFactory){
+		controller: function($scope, masklist, AdminFactory, MasksFactory){
 			$scope.masks = masklist;
 			$scope.createMask = AdminFactory.createMask;
 			$scope.styles = [{num: 0, name: 'Eccentric'}, {num: 1, name:'Full'}, {num: 2, name: 'Half'}];
@@ -24,18 +24,23 @@ app.config(function($stateProvider) {
 			$scope.updateCategory = AdminFactory.updateCategory;
 		}
 	})
-	.state('ordermgmt', {
-		url: '/ordermgmt',
-		templateUrl: 'js/admin/ordermgmt/ordermgmt.html',
-		controller: 'AdminCtrl'
-	})
 	.state('usermgmt', {
 		url: '/usermgmt',
-		templateUrl: 'js/admin/usermgmt/usermgmt.html',
-		controller: 'AdminCtrl'
+		templateUrl: 'js/admin/usermgmt.html',
+		resolve: {
+			users: function(AdminFactory){
+				return AdminFactory.getAllUsers();
+			}
+		}
+		controller: function($scope, users, AdminFactory){
+			$scope.users = users;
+			$scope.resetPassword = AdminFactory.resetPassword;
+			$scope.deleteUser = AdminFactory.deleteUser;
+			$scope.changeAdmin = AdminFactory.changeAdmin;
+		}
 	});
 });
 
-app.controller('AdminCtrl', function($scope, AuthService, AdminFactory, $state){
-	$scope.users = AdminFactory.getAllUsers();
+app.controller('AdminCtrl', function($scope, AuthService, AdminFactory, $state, users){
+	
 })

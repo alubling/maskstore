@@ -93,9 +93,10 @@ router.put('/:userId/passwordReset', function(req, res){
 	});
 });
 
-router.put('/:userId/makeAdmin', function(req, res){
+router.put('/:userId/admin', function(req, res){
 	Users.findOne({_id: req.params.userId}).then(function(user){
-		user.isAdmin = true;
+		user.toggleAdmin();
+		user.save();
 		res.json(user);
 	});
 });
