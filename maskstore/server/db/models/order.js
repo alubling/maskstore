@@ -5,6 +5,7 @@ var mongoose = require('mongoose');
 // adds the schema type "currency" to mongoose
 require('mongoose-currency').loadType(mongoose);
 var Currency = mongoose.Types.Currency;
+var states = ['created', 'processing', 'connected', 'completed', 'cancelled']
 
 var schema = new mongoose.Schema({
     orderDate : { 
@@ -31,6 +32,11 @@ var schema = new mongoose.Schema({
     user: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User', // how can an order be made available to both an authenticated user AND guest session?
+    },
+    status: {
+        type: String,
+        required: true,
+        enum: states
     }
 });
 

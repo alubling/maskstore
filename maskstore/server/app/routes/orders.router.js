@@ -13,7 +13,7 @@ router.get('/', function(req, res){
 	})
 });
 
-//Get all orders for a user: GET /orders. Is this the right way to find the referring user?
+//Get all orders for a user: GET /orders.
 router.get('/user/:userId', function(req, res){
 	Orders.find({user: req.params.userId}).then(function(orders){
 		res.status('200').json(orders);
@@ -57,6 +57,9 @@ router.put('/:orderId', function(req, res){
 	});
 });
 
+
+//ADMIN ROUTES
+
 //Delete order: DELETE /orders/:OrderId
 router.delete('/:orderId', function(req, res){
 	Orders.findOne({_id: req.params.orderId}).then(function(order){
@@ -68,6 +71,21 @@ router.delete('/:orderId', function(req, res){
 		console.log('Error removing order: '+err);
 	});
 });
+
+//Change status of an order
+router.put('/:orderId/statusUpdate', function(req, res){
+	var statusUpdate = req.body.status;
+	Orders.findOneAndUpdate({_id: req.params.orderId}, 
+		{$set: {status: statusUpdate}},
+		{new: true})
+	.then(function(updatedOrder){
+		res.status(200).json(updatedOrder);
+	}, function(err){
+		res.status(406).send('There was an error setting the order status: '+err);
+	});
+});
+
+
 
 // Make sure this is after all of
 // the registered routes!
