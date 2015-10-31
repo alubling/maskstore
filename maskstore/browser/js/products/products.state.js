@@ -38,11 +38,20 @@ app.config(function($stateProvider){
 			},
 			reviews: function(ReviewsFactory, $stateParams) {
 				return ReviewsFactory.getReviews($stateParams.id);
+			},
+			user: function(AuthService) {
+				return AuthService.getLoggedInUser();
 			}
 		},
-		controller: function($scope, mask, reviews) {
+		controller: function($scope, mask, reviews, user, ReviewsFactory) {
 			$scope.mask = mask;
 			$scope.reviews = reviews;
+			$scope.createReview = function(newReview) {
+				newReview.mask = mask;
+				newReview.user = user;
+				console.log("creating this review: ", newReview);
+				return ReviewsFactory.createReview(newReview);
+			}
 		}
 	})
 	.state('products.category', {
