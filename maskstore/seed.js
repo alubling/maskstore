@@ -155,7 +155,8 @@ mongoose.connection.on('open', function() {
                         quantity: 3
                     }],
                     totalPrice: '$59.95',
-                    user: userModels[0]
+                    user: userModels[0],
+                    status: 'completed'
                 }];
 
                 return Order.createAsync(orders);
