@@ -25,7 +25,8 @@
                     <td>
                         <input type="text" class="form-control" placeholder="{{ mask.quantity }}" ng-model="mask.quantity" ng-change="update(mask)">
                     </td>
-                    <td><a type="button" class="btn btn-danger" ng-click="removeMask(mask)"><span class="glyphicon glyphicon-trash"></span></a></td>
+                </tr>
+                    <td><a ng-show="!isCheckout" type="button" class="btn btn-danger" ng-click="removeMask(mask)"><span class="glyphicon glyphicon-trash"></span></a></td>
                 </tr>
                 <tr>
                     <td>
@@ -40,9 +41,9 @@
                     </td>
                 </tr>
             </table>
-            <div class="text-right" ng-show="quantity > 0">
+            <div class="text-right" ng-show="!isCheckout && (quantity > 0)">
                 <a type="button" class="btn btn-primary" href="#/cart">Update <span class="glyphicon glyphicon-pencil" ng-click="update()"></span></a>
-                <a type="button" class="btn btn-danger" href="#/cart">Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
+                <a type="button" class="btn btn-danger" href="/checkout">Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
             </div>
         </div>
     </div>
