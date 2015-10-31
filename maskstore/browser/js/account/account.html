@@ -1,0 +1,46 @@
+<div class="ui basic segment">
+  <h2>{{user.user.firstName}} {{user.user.lastName}} - Order Summary</h2>
+</div>
+
+<div class="ui divider"></div>
+
+<!-- <tabset>
+  <tab title="Tab 1">hello</tab>
+  <tab title="Tab 2">Goodbye</tab>
+  <tab title="Tab 3">Whatever</tab>
+</tabset> -->
+
+    <!-- <div class="ui container">
+      <div class="ui large secondary inverted pointing menu">
+        <a ng-repeat="order in orders" class="item">{{order.orderDate}}</a>
+        </div>
+      </div> -->
+
+<!-- <div class="ui tabular menu">
+  <div class="item" data-ng-tab="tname">Tab Name</div>
+  <div class="item" data-ng-tab="tname2">Tab Name 2</div>
+</div>
+<div class="ui tab" data-ng-tab="tname">
+  1
+</div>
+<div class="ui tab" data-ng-tab="tname2">
+  2
+</div> -->
+
+<!-- <a ng-repeat="item in items" class="item" ui-sref-active="active" ui-sref="{{item.state}}">{{item.label}}</a> -->
+
+<div id="context2" account>
+  <div class="ui secondary menu">
+    <a class="item" ng-repeat="order in orders" ui-sref-active="active" ui-sref="account.detail({id: order._id})">{{dates[$index]}}</a>
+  </div>
+  <div ui-view></div>
+  <!-- <div class="ui tab segment active" data-tab="fourth">
+    4
+  </div>
+  <div class="ui tab segment" data-tab="fifth">
+    5
+  </div>
+  <div class="ui tab segment" data-tab="sixth">
+    6
+  </div> -->
+</div>

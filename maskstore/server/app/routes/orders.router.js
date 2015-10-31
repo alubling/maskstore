@@ -25,7 +25,9 @@ router.get('/user/:userId', function(req, res){
 
 //get one order (just in case we need this)
 router.get('/:orderId', function(req, res){
-	Orders.find({_id: req.params.orderId}).then(function(order){
+	Orders.find({_id: req.params.orderId}) // this should be findOne but who cares for now
+	.populate('masks.mask') // need to grab the masks here rather than just having the ids
+	.then(function(order){
 		res.status('200').json(order);
 	})
 	.catch(function(err){
@@ -46,7 +48,7 @@ router.post('/', function(req, res){
 //Update order: PUT /orders/:OrderId
 router.put('/:orderId', function(req, res){
 	var orderUpdates = req.body;
-	Orders.findOneAndUpdate({_id: req.params.orderId}, 
+	Orders.findOneAndUpdate({_id: req.params.orderId},
 		{$set: orderUpdates},
 		{new: true})
 	.then(function(updatedOrder){

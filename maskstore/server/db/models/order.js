@@ -7,16 +7,16 @@ require('mongoose-currency').loadType(mongoose);
 var Currency = mongoose.Types.Currency;
 
 var schema = new mongoose.Schema({
-    orderDate : { 
-        type : Date, 
-        default: Date.now 
+    orderDate : {
+        type : Date,
+        default: Date.now
     },
     masks: [{
         mask: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Mask'
         },
-        price: { 
+        price: {
             type: Currency,
             required: true
         },
@@ -35,5 +35,3 @@ var schema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model('Order', schema);
-
-
