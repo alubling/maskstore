@@ -41,6 +41,6 @@ app.config(function($stateProvider) {
 	});
 });
 
-app.controller('AdminCtrl', function($scope, AuthService, AdminFactory, $state, users){
+app.controller('AdminCtrl', function($scope, AuthService, AdminFactory, $state){
 	
 })

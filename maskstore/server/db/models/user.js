@@ -27,7 +27,10 @@ var User = new mongoose.Schema({
     },
     password: {
         type: String,
-        reset: Boolean
+    },
+    passwordReset: {
+        type: Boolean,
+        default: false
     },
     salt: {
         type: String
@@ -101,6 +104,16 @@ User.methods.authenticate = function(attempt) {
 
 User.methods.toggleAdmin = function(){
     return this.isAdmin = !this.isAdmin;
+}
+
+User.methods.updatePassword = function(newPassword){
+    return this.password = newPassword;
+}
+User.methods.togglePasswordReset = function(){
+    if (!this.passwordReset){
+        return this.passwordReset = true;
+    }
+    return this.passwordReset = !this.passwordReset;
 }
 
 User.pre('save', function(next) {

@@ -86,12 +86,23 @@ router.put('/:userId/cart', function(req, res){
 
 
 //ADMIN ROUTES -- PUT INTO A SEPARATE ROUTER AND SECURE
-router.put('/:userId/passwordReset', function(req, res){
+router.put('/passwordReset/:userId', function(req, res){
 	Users.findOne({_id: req.params.userId}).then(function(user){
-		user.password.reset = true;
+		user.togglePasswordReset();
+		user.save();
 		res.json(user);
 	});
 });
+
+router.put('/setNewPassword/:userId', function(req, res){
+	var newPassword = req.params.newPassword;
+	Users.findOne({_id: req.params.userId}).then(function(user){
+		user.updatePassword(newPassword);
+		user.togglePasswordReset();
+		user.save();
+		res.json(user);
+	})
+})
 
 router.put('/:userId/admin', function(req, res){
 	Users.findOne({_id: req.params.userId}).then(function(user){

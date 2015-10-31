@@ -71,8 +71,14 @@ router.put('/:maskId/inv', function (req, res){
 router.put('/:maskId/cat', function (req, res){
 	var cat = req.body.category
 	MasksModel.findOne({_id: req.params.maskId}).then(function(mask){
-		mask.updateCategory(cat);
-		mask.save();
+		if (req.body.add) {
+			mask.addCategory(cat);
+			mask.save();
+		}
+		else {
+			mask.removeCategory(cat);
+			mask.save();
+		}
 		res.json(mask);
 	}, function(err){
 		res.status(500).send("Error posting mask: "+err);
@@ -89,6 +95,7 @@ router.delete('/:maskId', function (req, res){
 		console.log('Error removing mask: '+err);
 	});
 });
+//add a category
 
 // Make sure this is after all of
 // the registered routes!
@@ -97,24 +104,3 @@ router.use(function (req, res) {
 });
 
 module.exports = router;
-
-
-
-
-//I don't think we need this route -- we can just add all of the masks to the order when the user checks out.
-
-/*// post a specific mask to an order
-router.post('/masks/:maskId', function(req, res) {
-
-  // create a new order
-  var newOrder = new OrdersModel(); // what if there is an existing order? add a put route? if statement here to check if there's an order? Creating an order might have to come earlier in the process and adding is just a series of puts
-  // add a mask to the order
-  newOrder.masks.push(req.body._id);
-  // increment the total price by this mask
-  newOrder.totalPrice += req.body.price;
-
-  newOrder.save().then(function(err, data) {
-    console.log("new order created and mask added!");
-    res.send(data);
-  });
-})*/
