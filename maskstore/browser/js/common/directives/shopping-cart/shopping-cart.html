@@ -1,5 +1,6 @@
 <div class="container">
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-controller="CartCtrl">
+
         <div class="panel-body  ui inverted segment">
             <h3>Shopping Cart</h3>
             <table class="ui selectable inverted table">
@@ -36,7 +37,7 @@
                     </td>
                 </tr>
             </table>
-            <div class="text-right" ng-show="!isCheckout && (quantity > 0)">
+            <div class="text-right" ng-show="!isCheckout && (quantity > 0)" >
                 <a type="button" class="btn btn-primary" href="#/cart">Update <span class="glyphicon glyphicon-pencil" ng-click="update()"></span></a>
                 <a type="button" class="btn btn-danger" href="/checkout">Checkout <span class="glyphicon glyphicon-shopping-cart"></span></a>
             </div>

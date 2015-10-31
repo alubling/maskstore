@@ -1,4 +1,6 @@
 app.controller('CartCtrl', function($scope, ShoppingCartService) {
+    $scope.isCheckout =  $scope.isCheckout || false;
+
     var reloadCart = function(cart) {
         if (cart) {
             $scope.masks = cart.getMasks();
@@ -41,7 +43,4 @@ app.controller('CartCtrl', function($scope, ShoppingCartService) {
                 reloadCart(cart);
             })
     };
-
-    $scope.$watch('cart', function() {}, true);
-
 });

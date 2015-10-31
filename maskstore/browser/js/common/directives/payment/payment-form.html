@@ -1,9 +1,8 @@
 <div class="container">
-    <div class="panel panel-default">
+    <div class="panel panel-default" ng-controller="CheckoutCtrl">
         <div class="panel-body ui inverted segment">
-            <h3>Payment</h3>
             <form class="ui form">
-                <h4 class="ui dividing header grey">Shipping Information</h4>
+                <h3 class="ui dividing header grey">Shipping Information</h4>
                 <div class="field">
                     <h4 class="ui header grey">Name</h4>
                     <div class="two fields">
@@ -337,7 +336,7 @@
                         </div>
                     </div>
                 </div>
-                <h4 class="ui dividing header grey">Billing Information</h4>
+                <h3 class="ui dividing header grey">Billing Information</h4>
                 <div class="field">
                    <h4 class="ui header grey">Card Type</h4>
                     <div class="ui selection dropdown">
@@ -392,7 +391,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="ui button" tabindex="0">Submit Order</div>
+                <div class="ui button red" tabindex="0">Submit Order</div>
             </form>
         </div>
     </div>
