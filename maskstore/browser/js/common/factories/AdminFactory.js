@@ -11,7 +11,7 @@ app.factory('AdminFactory', function($http){
 		});
 	}
 
-	function passwordReset(userId){
+	function resetPassword(userId){
 		return $http.get('/api/users/'+userId).then(function(res){
 			var user = res.data;
 			if(user.google || user.twitter || user.facebook) {
@@ -59,10 +59,16 @@ app.factory('AdminFactory', function($http){
 		});
 	}
 
+	function changeAdmin(id){
+		$http.put('/api/users/'+id+'/admin').then(function(res){
+			console.log(res.data);
+		});
+	}
+
 	return {
 		getAllUsers: getAllUsers,
 		deleteUser: deleteUser,
-		passwordReset: passwordReset,
+		resetPassword: resetPassword,
 		createMask: createMask,
 		addInventory: addInventory,
 		subtractInventory: subtractInventory,

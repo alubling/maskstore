@@ -93,6 +93,10 @@ User.methods.authenticate = function(attempt) {
     return this.password === this.constructor.encryptPassword(attempt, this.salt);
 };
 
+User.methods.toggleAdmin = function(){
+    return this.isAdmin = !this.isAdmin;
+}
+
 User.pre('save', function(next) {
     if (this.isModified('password')) {
         this.salt = this.constructor.generateSalt();
