@@ -31,7 +31,7 @@ app.config(function($stateProvider) {
 			users: function(AdminFactory){
 				return AdminFactory.getAllUsers();
 			}
-		}
+		},
 		controller: function($scope, users, AdminFactory){
 			$scope.users = users;
 			$scope.resetPassword = AdminFactory.resetPassword;
