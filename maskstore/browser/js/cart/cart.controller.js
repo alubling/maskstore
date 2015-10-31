@@ -1,8 +1,6 @@
 app.controller('CartCtrl', function($scope, ShoppingCartService) {
     var reloadCart = function(cart) {
         if (cart) {
-            console.log("reloading: ", cart)
-
             $scope.masks = cart.getMasks();
             $scope.subtotal = cart.subtotal;
             $scope.quantity = cart.quantity;
@@ -12,7 +10,6 @@ app.controller('CartCtrl', function($scope, ShoppingCartService) {
 
     ShoppingCartService.getCart()
         .then(function(cart) {
-            console.log("Controller: ", cart);
             reloadCart(cart);
         });
 
