@@ -1,4 +1,4 @@
-app.directive('mask', function(CartFactory, ShoppingCartService, AuthService) {
+app.directive('mask', function(CartFactory, ShoppingCartService, AuthService, ReviewsFactory) {
     return {
         restrict: 'A',
         link: function(scope, element, attrs) {
@@ -30,7 +30,9 @@ app.directive('mask', function(CartFactory, ShoppingCartService, AuthService) {
                         console.log("Cart: ", cart);
                         ShoppingCartService.saveCart(cart);
                     });
-            }
+            };
+            scope.loggedIn = AuthService.isAuthenticated();
+            // scope.createReview = ReviewsFactory.createReview;
         }
     };
 });

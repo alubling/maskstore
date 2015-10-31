@@ -8,6 +8,14 @@ app.factory('ReviewsFactory', function($http){
 		  });
 	}
 
+	function createReview(newReview){
+		console.log('Creating a new review: ');
+		console.log(newReview);
+		return $http.post('/api/reviews/', newReview).then(function(res){
+			console.log(res.data);
+			return res.data;
+		});
+	}
 
 	// function getMask(id){
 	// 	console.log("making a request to get one mask! this one: ", id);
@@ -19,6 +27,7 @@ app.factory('ReviewsFactory', function($http){
 	// }
 
 	return {
-		getReviews: getReviews
+		getReviews: getReviews,
+		createReview: createReview
 	}
 });
