@@ -2,27 +2,39 @@ app.factory("CartFactory", function() {
     return {
         getCart: function(userId, data) {
             return new Cart(userId, data);
+        },
+        appendCart: function(cart, data) {
+            console.log(data);
+            for (var i = 0; i < data.masks.length; i++) {
+                cart.add(data.masks[i]);
+            }
         }
     }
 })
 
 function Cart(userId, cartData) {
-    this.masks = [];
     this.userId = userId;
+    this.masks = [];
     this.subtotal = 0;
     this.quantity = 0;
 
     // if cartData is available, use it as the existing data for new cart
     if (cartData) {
         this.masks = cartData.masks;
-/*        this.subtotal = cartData.subtotal;
-*/        this.userId = userId;
-        /*this.quantity = cartData.quantity;*/
+
+        // calculate only if we have masks
+        if (this.masks.length)
+            this._recalculate();
     }
 };
 
-Cart.prototype.add = function(mask) {
+// allow userId to be set
+Cart.prototype.setUserId = function(userId) {
+    this.userId = userId;
+}
 
+// add a mask to cart
+Cart.prototype.add = function(mask) {
     var found = false;
     for (var i = 0; i < this.masks.length; i++) {
         if (this.masks[i].title === mask.title) {
@@ -31,15 +43,18 @@ Cart.prototype.add = function(mask) {
             break;
         }
     }
+
     if (!found) {
-        mask.quantity = 1;
         this.masks.push(mask);
+        this.masks.slice(-1).quantity = 1;
     }
+
+    this._recalculate();
 };
 
+// remove a mask from cart
 Cart.prototype.remove = function(mask) {
     var indexFound = -1;
-
     for (var i = 0; i < this.masks.length; i++) {
         if (mask.title === this.masks[i].title) {
             indexFound = i;
@@ -48,15 +63,21 @@ Cart.prototype.remove = function(mask) {
     }
 
     if (indexFound >= 0) {
-        var removed = this.masks.splice(indexFound, 1)[0];
+        this.masks.splice(indexFound, 1)[0];
+        this._recalculate();
     }
 };
+
+Cart.prototype._recalculate = function() {
+    this.subtotal = this._getSubtotal();
+    this.quantity = this._getQuantity();
+}
 
 Cart.prototype.getMasks = function() {
     return this.masks;
 };
 
-Cart.prototype.getSubtotal = function() {
+Cart.prototype._getSubtotal = function() {
     return this.masks.map(function(m) {
         return m.quantity * m.price;
     }).reduce(function(p, c) {
@@ -64,7 +85,7 @@ Cart.prototype.getSubtotal = function() {
     }, 0);
 };
 
-Cart.prototype.getQuantity = function() {
+Cart.prototype._getQuantity = function() {
     return this.masks.map(function(m) {
         return parseInt(m.quantity);
     }).reduce(function(p, c) {

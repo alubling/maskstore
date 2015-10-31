@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 // adds the schema type "currency" to mongoose
 require('mongoose-currency').loadType(mongoose);
 var Currency = mongoose.Types.Currency;
-var states = ['created', 'processing', 'connected', 'completed', 'cancelled']
+var states = ['created', 'processing', 'connected', 'completed', 'cancelled'];
 
 var schema = new mongoose.Schema({
     orderDate : { 

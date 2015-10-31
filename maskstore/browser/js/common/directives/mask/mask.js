@@ -15,9 +15,11 @@ app.directive('mask', function(CartFactory, ShoppingCartService, AuthService) {
                 AuthService.getLoggedInUser()
                     .then(function(res) {
                         var userId = res === null ? null : res.user._id;
-                        var cart = ShoppingCartService.getCart(userId);
-                        console.log('Adding Cart with UserId: (' + userId + ')');
-                        return cart;
+                        return ShoppingCartService.getCart(userId)
+                          .then(function(cart) {
+                            console.log('Adding Cart with UserId: (' + userId + ')');
+                            return cart;
+                          });
                     })
                     .then(function(cart) {
                         mask.quantity = 1;
@@ -25,6 +27,7 @@ app.directive('mask', function(CartFactory, ShoppingCartService, AuthService) {
                         return cart;
                     })
                     .then(function(cart) {
+                        console.log("Cart: ", cart);
                         ShoppingCartService.saveCart(cart);
                     });
             }
